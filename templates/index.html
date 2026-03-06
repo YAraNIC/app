@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Machine Learning Prompt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+            font-size: 14px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        button {
+            background-color: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        #output {
+            margin-top: 15px;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>First Page</h1>
+        <p><strong>Machine Learning Class</strong></p>  
+
+        <h2>Text Classification by Feelings</h2>
+
+        <textarea id="textInput" rows="4"
+        placeholder="Write a sentence here..."></textarea>
+        <br><br>
+
+        <button onclick="generatePrompt()">Generate Prompt</button>
+
+        <h3>Generated Prompt:</h3>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            let text = document.getElementById("textInput").value;
+
+            let prompt = "Classify the following text as POSITIVE, NEGATIVE, or NEUTRAL:\n\nText: \"" 
+                        + text + "\"";
+
+            document.getElementById("output").innerText = prompt;
+        }
+    </script>
+
+</body>
+</html>
