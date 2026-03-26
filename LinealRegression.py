@@ -12,7 +12,7 @@ data = {
 df = pd.DataFrame(data)
 x = df[["Study Hours"]]
 y = df[["Final Grade"]]
-
+v = 1
 model = LinearRegression()
 model.fit(x, y) 
 
