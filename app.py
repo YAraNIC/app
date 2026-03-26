@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request
-import LinealRegression
+import LinearRegression
 
 app = Flask(__name__)
 
@@ -19,6 +19,6 @@ def calculateGrade():
 
         hours = float(request.form["hours"])
 
-        calculateResult= LinealRegression.calculateGrade(hours)
+        calculateResult= LinearRegression.calculateGrade(hours)
 
     return render_template("LinearRegressionGrades.html", result = calculateResult)
