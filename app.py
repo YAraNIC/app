@@ -1,24 +1,29 @@
-from flask import Flask,render_template, request
+from flask import Flask, render_template, request
 import LinearRegression
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return  "Hello Flask"
+    return render_template('index.html')
 
-@app.route('/FirstPage')
-def firstPage(name = ''):
-    return render_template('index.html', name = name)
+@app.route('/use-cases')
+def use_cases():
+    return render_template('cases.html')
 
+@app.route('/concepts')
+def concepts():
+    return render_template('concepts.html')
 
-@app.route('/LinearRegression/', methods=["GET","POST"])
-def calculateGrade():
-    calculateResult=None
+@app.route('/predict', methods=["GET", "POST"])
+def predict():
+    result = None
+    hours = None
     if request.method == "POST":
-
         hours = float(request.form["hours"])
+        result = LinearRegression.calculateGrade(hours)
+        result = round(float(result), 2)
+    return render_template("predict.html", result=result, hours=hours)
 
-        calculateResult= LinearRegression.calculateGrade(hours)
-
-    return render_template("LinearRegressionGrades.html", result = calculateResult)
+if __name__ == '__main__':
+    app.run(debug=True)
