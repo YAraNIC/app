@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Caso 2 — Image Recognition{% endblock %}
+
+{% block content %}
+
+<section class="bg-success text-white py-5">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-2-circle me-2"></i>Image Recognition</h1>
+        <p class="lead mb-0">Four real-world applications of Machine Learning.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="card h-100 shadow-sm border-0" id="case2">
+            <div class="card-header bg-success text-white d-flex align-items-center gap-2">
+                <span class="badge bg-white text-success fw-bold">Case 2</span>
+                <span class="fw-semibold">Image Recognition</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <span class="badge bg-success-subtle text-success me-1">Computer Vision</span>
+                    <span class="badge bg-secondary-subtle text-secondary">Deep Learning</span>
+                </div>
+                <p class="text-muted">Uses Convolutional Neural Networks (CNNs) to identify and classify objects, faces, or patterns within images.</p>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Medical image diagnosis</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Autonomous vehicles</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Quality control in manufacturing</li>
+                </ul>
+                <div class="alert alert-success mt-3 mb-0 py-2">
+                    <small><i class="bi bi-tools me-1"></i><strong>Tools:</strong> TensorFlow, Keras, OpenCV</small>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 text-end">
+                <a href="/use-cases" class="btn btn-outline-success">← Back to all cases</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

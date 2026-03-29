@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Caso 1 — Text Classification by Sentiment{% endblock %}
+
+{% block content %}
+
+<section class="bg-primary text-white py-5">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-1-circle me-2"></i>Text Classification by Sentiment</h1>
+        <p class="lead mb-0">Four real-world applications of Machine Learning.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="card h-100 shadow-sm border-0" id="case1">
+            <div class="card-header bg-primary text-white d-flex align-items-center gap-2">
+                <span class="badge bg-white text-primary fw-bold">Case 1</span>
+                <span class="fw-semibold">Text Classification by Sentiment</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <span class="badge bg-primary-subtle text-primary me-1">NLP</span>
+                    <span class="badge bg-secondary-subtle text-secondary">Supervised</span>
+                </div>
+                <p class="text-muted">Analyzes text to automatically classify it as <strong>Positive</strong>, <strong>Negative</strong>, or <strong>Neutral</strong> using Natural Language Processing.</p>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Customer review analysis</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Social media monitoring</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Brand reputation tracking</li>
+                </ul>
+                <div class="alert alert-primary mt-3 mb-0 py-2">
+                    <small><i class="bi bi-tools me-1"></i><strong>Tools:</strong> NLTK, scikit-learn, TF-IDF</small>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 text-end">
+                <a href="/use-cases" class="btn btn-outline-primary">← Back to all cases</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

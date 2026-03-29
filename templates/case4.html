@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Caso 4 — Fraud Detection{% endblock %}
+
+{% block content %}
+
+<section class="bg-danger text-white py-5">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-4-circle me-2"></i>Fraud Detection</h1>
+        <p class="lead mb-0">Four real-world applications of Machine Learning.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="card h-100 shadow-sm border-0" id="case4">
+            <div class="card-header bg-danger text-white d-flex align-items-center gap-2">
+                <span class="badge bg-white text-danger fw-bold">Case 4</span>
+                <span class="fw-semibold">Fraud Detection</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <span class="badge bg-danger-subtle text-danger me-1">Anomaly Detection</span>
+                    <span class="badge bg-secondary-subtle text-secondary">Supervised</span>
+                </div>
+                <p class="text-muted">Identifies unusual patterns in transactions or user behavior to detect and prevent fraudulent activity in real time.</p>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Credit card fraud prevention</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Insurance claim analysis</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Cybersecurity threat detection</li>
+                </ul>
+                <div class="alert alert-danger mt-3 mb-0 py-2">
+                    <small><i class="bi bi-tools me-1"></i><strong>Tools:</strong> Random Forest, XGBoost, Isolation Forest</small>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 text-end">
+                <a href="/use-cases" class="btn btn-outline-light">← Back to all cases</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

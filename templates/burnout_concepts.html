@@ -1,0 +1,219 @@
+{% extends "layout.html" %}
+{% block title %}Basic Concepts — Mental Health & Burnout{% endblock %}
+
+{% block content %}
+
+<!-- HEADER -->
+<section class="py-5 text-white" style="background: linear-gradient(135deg, #6f42c1, #0d6efd);">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-book me-2"></i>Basic Concepts</h1>
+        <p class="lead mb-0">Understanding Multiple Linear Regression applied to Student Mental Health & Burnout.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- WHAT IS BURNOUT -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-3">
+                            <i class="bi bi-question-circle me-2" style="color:#6f42c1;"></i>What is Student Burnout?
+                        </h4>
+                        <p class="text-muted">
+                            Student burnout is a state of chronic physical and emotional exhaustion caused by prolonged academic stress.
+                            It affects motivation, performance, and overall mental well-being. Key contributing factors include high stress levels,
+                            anxiety, poor sleep, and excessive study hours without adequate rest.
+                        </p>
+                        <div class="alert alert-primary mb-0">
+                            <strong>In this model:</strong> We predict the <em>burnout_score</em> (0–10) of a student
+                            based on 4 measurable inputs: <strong>stress level</strong>, <strong>anxiety score</strong>,
+                            <strong>sleep hours</strong>, and <strong>study hours per day</strong>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MULTIPLE LINEAR REGRESSION -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">
+                            <i class="bi bi-function me-2 text-success"></i>Multiple Linear Regression
+                        </h5>
+                        <p class="text-muted">
+                            Unlike Simple Linear Regression (one predictor), <strong>Multiple Linear Regression</strong>
+                            uses <em>two or more independent variables</em> to predict an outcome.
+                            This gives a much more realistic and accurate model.
+                        </p>
+                        <div class="bg-dark text-white rounded p-3 text-center mb-3">
+                            <span class="font-monospace" style="font-size:0.9rem;">
+                                y = b₀ + b₁x₁ + b₂x₂ + b₃x₃ + b₄x₄
+                            </span>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-0 d-flex gap-2">
+                                <span class="badge bg-primary mt-1">y</span>
+                                <span><strong>burnout_score</strong> — the value we predict (0–10)</span>
+                            </li>
+                            <li class="list-group-item px-0 d-flex gap-2">
+                                <span class="badge bg-danger mt-1">x₁</span>
+                                <span><strong>stress_level</strong> — overall stress (0–10)</span>
+                            </li>
+                            <li class="list-group-item px-0 d-flex gap-2">
+                                <span class="badge bg-warning text-dark mt-1">x₂</span>
+                                <span><strong>anxiety_score</strong> — anxiety intensity (0–10)</span>
+                            </li>
+                            <li class="list-group-item px-0 d-flex gap-2">
+                                <span class="badge bg-info text-dark mt-1">x₃</span>
+                                <span><strong>sleep_hours</strong> — hours of sleep per night</span>
+                            </li>
+                            <li class="list-group-item px-0 d-flex gap-2">
+                                <span class="badge bg-success mt-1">x₄</span>
+                                <span><strong>study_hours_per_day</strong> — daily study duration</span>
+                            </li>
+                            <li class="list-group-item px-0 d-flex gap-2">
+                                <span class="badge bg-secondary mt-1">b₀</span>
+                                <span><strong>Intercept</strong> — baseline burnout when all inputs are 0</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOW MODEL LEARNS -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">
+                            <i class="bi bi-gear me-2 text-warning"></i>How the Model Learns
+                        </h5>
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width:32px;height:32px;background:#6f42c1;font-weight:600;font-size:0.85rem;">1</div>
+                                <div>
+                                    <strong>Dataset</strong><br>
+                                    <small class="text-muted">1,000,000 synthetic records of students. We sample 20,000 for fast training without losing accuracy.</small>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width:32px;height:32px;background:#6f42c1;font-weight:600;font-size:0.85rem;">2</div>
+                                <div>
+                                    <strong>Train / Test Split</strong><br>
+                                    <small class="text-muted">80% of data trains the model. 20% is used to evaluate its accuracy on unseen records.</small>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width:32px;height:32px;background:#6f42c1;font-weight:600;font-size:0.85rem;">3</div>
+                                <div>
+                                    <strong>Fitting the coefficients</strong><br>
+                                    <small class="text-muted">The algorithm finds the best b₀…b₄ values that minimize the Mean Squared Error (MSE) across all samples.</small>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width:32px;height:32px;background:#198754;font-weight:600;font-size:0.85rem;">✓</div>
+                                <div>
+                                    <strong>Prediction</strong><br>
+                                    <small class="text-muted">Input the 4 values → the model computes the formula and returns an estimated burnout score.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY RELATIONSHIPS -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">
+                            <i class="bi bi-arrow-left-right me-2 text-primary"></i>Key Relationships in the Dataset
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-md-3 col-6">
+                                <div class="card h-100 border-danger border-opacity-25 bg-danger bg-opacity-10 text-center p-3">
+                                    <div class="fs-2 mb-1">😴</div>
+                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">Less Sleep</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">↑ Higher stress & burnout</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="card h-100 border-warning border-opacity-25 bg-warning bg-opacity-10 text-center p-3">
+                                    <div class="fs-2 mb-1">📚</div>
+                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">More Study Hours</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">↑ Performance but ↑ burnout</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="card h-100 border-danger border-opacity-25 bg-danger bg-opacity-10 text-center p-3">
+                                    <div class="fs-2 mb-1">💸</div>
+                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">Financial Stress</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">↑ Anxiety & depression</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="card h-100 border-success border-opacity-25 bg-success bg-opacity-10 text-center p-3">
+                                    <div class="fs-2 mb-1">🤝</div>
+                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">Social Support</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">↓ Depression score</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- METRICS -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">
+                            <i class="bi bi-bar-chart me-2 text-success"></i>How We Measure Model Quality
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="bg-light rounded p-3">
+                                    <p class="fw-semibold mb-1">R² Score (Coefficient of Determination)</p>
+                                    <p class="text-muted mb-0" style="font-size:0.85rem;">
+                                        Measures how much of the variance in burnout_score is explained by the model.
+                                        A value of <strong>0.85</strong> means the model explains 85% of the variation.
+                                        Closer to 1.0 is better.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="bg-light rounded p-3">
+                                    <p class="fw-semibold mb-1">MSE (Mean Squared Error)</p>
+                                    <p class="text-muted mb-0" style="font-size:0.85rem;">
+                                        Average of the squared differences between predicted and actual values.
+                                        A lower MSE means the model's predictions are closer to reality.
+                                        Closer to 0 is better.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-5">
+            <p class="text-muted mb-3">Ready to test the model with real values?</p>
+            <a href="/burnout" class="btn btn-lg text-white px-5"
+               style="background: linear-gradient(135deg,#6f42c1,#0d6efd);">
+                <i class="bi bi-calculator me-2"></i>Go to Burnout Predictor
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

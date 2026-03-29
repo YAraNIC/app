@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Caso 3 — Recommendation System{% endblock %}
+
+{% block content %}
+
+<section class="bg-warning text-dark py-5">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-3-circle me-2"></i>Recommendation System</h1>
+        <p class="lead mb-0">Four real-world applications of Machine Learning.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="card h-100 shadow-sm border-0" id="case3">
+            <div class="card-header bg-warning text-dark d-flex align-items-center gap-2">
+                <span class="badge bg-white text-warning fw-bold">Case 3</span>
+                <span class="fw-semibold">Recommendation System</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <span class="badge bg-warning-subtle text-warning me-1">Collaborative Filtering</span>
+                    <span class="badge bg-secondary-subtle text-secondary">Unsupervised</span>
+                </div>
+                <p class="text-muted">Predicts user preferences based on past behavior and similar users to suggest relevant products, movies, or content.</p>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Netflix / Spotify recommendations</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>E-commerce product suggestions</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Personalized news feeds</li>
+                </ul>
+                <div class="alert alert-warning mt-3 mb-0 py-2">
+                    <small><i class="bi bi-tools me-1"></i><strong>Tools:</strong> Surprise, pandas, cosine similarity</small>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 text-end">
+                <a href="/use-cases" class="btn btn-outline-warning text-dark">← Back to all cases</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

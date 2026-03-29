@@ -1,110 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Machine Learning Prompt</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "layout.html" %}
+{% block title %}Home — ML Project{% endblock %}
 
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+{% block content %}
 
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 400px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #1e3c72;
-            margin-bottom: 5px;
-        }
-
-        h2 {
-            font-size: 18px;
-            color: #555;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            resize: none;
-            font-size: 14px;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #2a5298;
-        }
-
-        button {
-            background-color: #2a5298;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #1e3c72;
-            transform: scale(1.05);
-        }
-
-        #output {
-            margin-top: 15px;
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 13px;
-            text-align: left;
-            white-space: pre-wrap;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-        <h1>First Page</h1>
-        <p><strong>Machine Learning Class</strong></p>  
-
-        <h2>Text Classification by Feelings</h2>
-
-        <textarea id="textInput" rows="4"
-        placeholder="Write a sentence here..."></textarea>
-        <br><br>
-
-        <button onclick="generatePrompt()">Generate Prompt</button>
-
-        <h3>Generated Prompt:</h3>
-        <div id="output"></div>
+<!-- HERO -->
+<section class="hero-section text-white text-center py-5">
+    <div class="container py-4">
+        <span class="badge bg-light text-primary mb-3 px-3 py-2 fs-6">
+            <i class="bi bi-mortarboard me-1"></i> Machine Learning Class
+        </span>
+        <h1 class="display-4 fw-bold mb-3">Exploring Machine Learning</h1>
+        <p class="lead mb-4 mx-auto" style="max-width:600px;">
+            A practical web application to understand ML use cases and key machine learning concepts.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/use-cases" class="btn btn-light btn-lg px-4">
+                <i class="bi bi-grid me-2"></i>ML Use Cases
+            </a>
+        </div>
     </div>
+</section>
 
-    <script>
-        function generatePrompt() {
-            let text = document.getElementById("textInput").value;
+<!-- CARDS OVERVIEW -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-2">What's Inside?</h2>
+        <p class="text-center text-muted mb-5">Two sections to learn and interact with Machine Learning.</p>
+        <div class="row g-4">
 
-            let prompt = "Classify the following text as POSITIVE, NEGATIVE, or NEUTRAL:\n\nText: \"" 
-                        + text + "\"";
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 card-hover">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-circle bg-primary-subtle mb-3 mx-auto">
+                            <i class="bi bi-grid-fill text-primary fs-3"></i>
+                        </div>
+                        <h5 class="fw-bold">ML Use Cases</h5>
+                        <p class="text-muted">Explore 4 real-world applications of Machine Learning across different industries.</p>
+                        <a href="/use-cases" class="btn btn-primary mt-2">Explore Cases</a>
+                    </div>
+                </div>
+            </div>
 
-            document.getElementById("output").innerText = prompt;
-        }
-    </script>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 card-hover">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-circle bg-success-subtle mb-3 mx-auto">
+                            <i class="bi bi-book-fill text-success fs-3"></i>
+                        </div>
+                        <h5 class="fw-bold">Key Machine Learning Concepts</h5>
+                        <p class="text-muted">Understand the foundational ideas of Machine Learning: Supervised Learning, Linear Regression and Flask integration.</p>
+                        <a href="/concepts" class="btn btn-success mt-2">Learn More</a>
+                    </div>
+                </div>
+            </div>
 
-</body>
-</html>
+        </div>
+    </div>
+</section>
+
+<!-- QUICK STATS -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-6 col-md-3">
+                <h2 class="fw-bold text-primary">4</h2>
+                <p class="text-muted mb-0">ML Use Cases</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 class="fw-bold text-primary">20k</h2>
+                <p class="text-muted mb-0">Training Samples</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 class="fw-bold text-primary">2</h2>
+                <p class="text-muted mb-0">Trained Models</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 class="fw-bold text-primary">Flask</h2>
+                <p class="text-muted mb-0">Backend Framework</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
