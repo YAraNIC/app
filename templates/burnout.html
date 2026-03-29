@@ -1,0 +1,203 @@
+{% extends "layout.html" %}
+{% block title %}Burnout Predictor — Mental Health{% endblock %}
+
+{% block content %}
+
+<section class="py-5" style="background: linear-gradient(135deg, #6f42c1, #0d6efd);">
+    <div class="container py-3 text-white">
+        <h1 class="fw-bold"><i class="bi bi-heart-pulse me-2"></i>Burnout Score Predictor</h1>
+        <p class="lead mb-0">Predict student burnout level using a Multiple Linear Regression model trained on 20,000 records.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- FORM -->
+            <div class="col-md-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="fw-bold mb-0">
+                            <i class="bi bi-sliders text-purple me-2" style="color:#6f42c1;"></i>Enter Student Data
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" action="/burnout">
+
+                            <!-- Stress Level -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Stress Level
+                                    <span class="badge bg-danger ms-1">0 – 10</span>
+                                </label>
+                                <input type="number" class="form-control" name="stress_level"
+                                    min="0" max="10" step="0.1" placeholder="e.g. 7.5"
+                                    value="{{ form_data.get('stress_level', '') }}" required>
+                                <div class="form-text">Overall perceived stress level.</div>
+                            </div>
+
+                            <!-- Anxiety Score -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Anxiety Score
+                                    <span class="badge bg-warning text-dark ms-1">0 – 10</span>
+                                </label>
+                                <input type="number" class="form-control" name="anxiety_score"
+                                    min="0" max="10" step="0.1" placeholder="e.g. 6.0"
+                                    value="{{ form_data.get('anxiety_score', '') }}" required>
+                                <div class="form-text">Intensity of anxiety experienced.</div>
+                            </div>
+
+                            <!-- Sleep Hours -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Sleep Hours
+                                    <span class="badge bg-info text-dark ms-1">0 – 12</span>
+                                </label>
+                                <input type="number" class="form-control" name="sleep_hours"
+                                    min="0" max="12" step="0.5" placeholder="e.g. 6.5"
+                                    value="{{ form_data.get('sleep_hours', '') }}" required>
+                                <div class="form-text">Average hours of sleep per night.</div>
+                            </div>
+
+                            <!-- Study Hours -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Study Hours per Day
+                                    <span class="badge bg-success ms-1">0 – 16</span>
+                                </label>
+                                <input type="number" class="form-control" name="study_hours"
+                                    min="0" max="16" step="0.5" placeholder="e.g. 8.0"
+                                    value="{{ form_data.get('study_hours', '') }}" required>
+                                <div class="form-text">Daily hours dedicated to studying.</div>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-lg fw-semibold text-white"
+                                    style="background: linear-gradient(135deg,#6f42c1,#0d6efd);">
+                                    <i class="bi bi-send me-2"></i>Predict Burnout Score
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT + MODEL INFO -->
+            <div class="col-md-7">
+
+                <!-- RESULT -->
+                {% if result is not none %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4 text-center">
+                        <p class="text-muted mb-1 fw-semibold" style="font-size:0.85rem;letter-spacing:0.08em;">PREDICTED BURNOUT SCORE</p>
+                        <h1 class="display-2 fw-bold mb-1"
+                            style="color:
+                            {% if result >= 7 %}#dc3545
+                            {% elif result >= 4 %}#fd7e14
+                            {% else %}#198754{% endif %};">
+                            {{ result }}
+                        </h1>
+                        <p class="text-muted mb-3">out of <strong>10.0</strong></p>
+
+                        {% if result >= 7 %}
+                            <span class="badge bg-danger fs-6 px-4 py-2">
+                                <i class="bi bi-exclamation-triangle me-1"></i> High Burnout Risk
+                            </span>
+                            <p class="text-muted mt-3 mb-0" style="font-size:0.85rem;">This student shows signs of significant burnout. Immediate intervention and rest are recommended.</p>
+                        {% elif result >= 4 %}
+                            <span class="badge bg-warning text-dark fs-6 px-4 py-2">
+                                <i class="bi bi-exclamation-circle me-1"></i> Moderate Burnout Risk
+                            </span>
+                            <p class="text-muted mt-3 mb-0" style="font-size:0.85rem;">The student is under notable stress. Better sleep habits and stress management are advised.</p>
+                        {% else %}
+                            <span class="badge bg-success fs-6 px-4 py-2">
+                                <i class="bi bi-check-circle me-1"></i> Low Burnout Risk
+                            </span>
+                            <p class="text-muted mt-3 mb-0" style="font-size:0.85rem;">The student appears to be managing well. Keep maintaining healthy habits.</p>
+                        {% endif %}
+
+                        <hr class="my-3">
+
+                        <!-- Input summary -->
+                        <div class="row g-2 text-center">
+                            <div class="col-6 col-md-3">
+                                <div class="bg-light rounded p-2">
+                                    <div class="fw-bold">{{ form_data.stress_level }}</div>
+                                    <small class="text-muted">Stress</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="bg-light rounded p-2">
+                                    <div class="fw-bold">{{ form_data.anxiety_score }}</div>
+                                    <small class="text-muted">Anxiety</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="bg-light rounded p-2">
+                                    <div class="fw-bold">{{ form_data.sleep_hours }}h</div>
+                                    <small class="text-muted">Sleep</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="bg-light rounded p-2">
+                                    <div class="fw-bold">{{ form_data.study_hours }}h</div>
+                                    <small class="text-muted">Study</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- MODEL INFO -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="fw-bold mb-0">
+                            <i class="bi bi-info-circle text-primary me-2"></i>Model Information
+                        </h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-3" style="font-size:0.85rem;">
+                            Multiple Linear Regression trained on a 20,000-record sample from the Student Mental Health &amp; Burnout dataset.
+                        </p>
+
+                        <!-- Metrics -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <div class="fw-bold fs-5 text-primary">{{ model_info.r2 }}</div>
+                                    <small class="text-muted">R² Score</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <div class="fw-bold fs-5 text-primary">{{ model_info.mse }}</div>
+                                    <small class="text-muted">MSE</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formula -->
+                        <p class="fw-semibold mb-2" style="font-size:0.85rem;">Model Formula:</p>
+                        <div class="bg-dark text-white rounded p-3 font-monospace" style="font-size:0.78rem;">
+                            burnout = {{ model_info.intercept }}<br>
+                            &nbsp;&nbsp;+ {{ model_info.coefficients.stress_level }} × stress_level<br>
+                            &nbsp;&nbsp;+ {{ model_info.coefficients.anxiety_score }} × anxiety_score<br>
+                            &nbsp;&nbsp;+ {{ model_info.coefficients.sleep_hours }} × sleep_hours<br>
+                            &nbsp;&nbsp;+ {{ model_info.coefficients.study_hours_per_day }} × study_hours
+                        </div>
+
+                        <a href="/concepts" class="btn btn-outline-primary btn-sm mt-3">
+                            <i class="bi bi-book me-1"></i>Review Linear Regression Concepts
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

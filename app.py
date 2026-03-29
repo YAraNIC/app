@@ -1,24 +1,53 @@
-from flask import Flask,render_template, request
+from flask import Flask, render_template, request
 import LinearRegression
+import MentalHealth
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return  "Hello Flask"
+    return render_template('index.html')
 
-@app.route('/FirstPage')
-def firstPage(name = ''):
-    return render_template('index.html', name = name)
+@app.route('/use-cases')
+def use_cases():
+    return render_template('cases.html')
 
+@app.route('/concepts')
+def concepts():
+    return render_template('concepts.html')
 
-@app.route('/LinearRegression/', methods=["GET","POST"])
-def calculateGrade():
-    calculateResult=None
+@app.route('/predict', methods=["GET", "POST"])
+def predict():
+    result = None
+    hours = None
     if request.method == "POST":
-
         hours = float(request.form["hours"])
+        result = round(LinearRegression.calculateGrade(hours), 2)
+    return render_template("predict.html", result=result, hours=hours)
 
-        calculateResult= LinearRegression.calculateGrade(hours)
+@app.route('/burnout-concepts')
+def burnout_concepts():
+    return render_template('burnout_concepts.html')
 
-    return render_template("LinearRegressionGrades.html", result = calculateResult)
+@app.route('/burnout', methods=["GET", "POST"])
+def burnout():
+    result = None
+    form_data = {}
+    model_info = MentalHealth.getModelInfo()
+
+    if request.method == "POST":
+        form_data = {
+            "stress_level":  float(request.form["stress_level"]),
+            "anxiety_score": float(request.form["anxiety_score"]),
+            "sleep_hours":   float(request.form["sleep_hours"]),
+            "study_hours":   float(request.form["study_hours"]),
+        }
+        result = MentalHealth.predictBurnout(**form_data)
+
+    return render_template("burnout.html",
+                           result=result,
+                           form_data=form_data,
+                           model_info=model_info)
+
+if __name__ == '__main__':
+    app.run(debug=True)
