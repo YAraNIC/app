@@ -53,17 +53,48 @@
                         </ul>
                     </li>
 
-                    <!-- Mental Health -->
+                    <!-- Supervised Machine Learning -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if 'burnout' in request.path %}active{% endif %}"
+                        <a class="nav-link dropdown-toggle {% if 'burnout' in request.path or 'burnout-concepts' in request.path or 'logistic' in request.path or 'assigned' in request.path %}active{% endif %}"
                            href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-heart-pulse me-1"></i>Mental Health
+                            <i class="bi bi-cpu-fill me-1"></i>Supervised Machine Learning
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/burnout-concepts"><i class="bi bi-book me-2"></i>Basic Concepts</a></li>
-                            <li><a class="dropdown-item" href="/burnout"><i class="bi bi-calculator me-2"></i>Burnout Predictor</a></li>
+
+                            <!-- Linear Regression -->
+                            <li class="dropdown-header fw-bold">Linear Regression</li>
+                            <li><a class="dropdown-item" href="/burnout-concepts">
+                                <i class="bi bi-book me-2"></i>Basic Concepts
+                            </a></li>
+                            <li><a class="dropdown-item" href="/burnout">
+                                <i class="bi bi-calculator me-2"></i>Application
+                            </a></li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <!-- Logistic Regression -->
+                            <li class="dropdown-header fw-bold">Logistic Regression</li>
+                            <li><a class="dropdown-item" href="/logistic-concepts">
+                                <i class="bi bi-book me-2"></i>Basic Concepts
+                            </a></li>
+                            <li><a class="dropdown-item" href="/logistic-application">
+                                <i class="bi bi-calculator me-2"></i>Application
+                            </a></li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <!-- Assigned Classification Model -->
+                            <li class="dropdown-header fw-bold">Assigned Classification Model</li>
+                            <li><a class="dropdown-item" href="/assigned-concepts">
+                                <i class="bi bi-book me-2"></i>Basic Concepts
+                            </a></li>
+                            <li><a class="dropdown-item" href="/assigned-application">
+                                <i class="bi bi-calculator me-2"></i>Application
+                            </a></li>
+
                         </ul>
                     </li>
+                    
 
                 </ul>
             </div>

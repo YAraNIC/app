@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-
+import LogisticRegressionModel
 import MentalHealth
 
 app = Flask(__name__)
@@ -58,6 +58,37 @@ def burnout():
                            result=result,
                            form_data=form_data,
                            model_info=model_info)
+
+@app.route('/logistic-concepts')
+def logistic_concepts():
+    return render_template('logistic_concepts.html')
+
+@app.route('/logistic-application', methods=["GET", "POST"])
+def logistic_application():
+    result = None
+    form_data = {}
+    
+    # Siempre cargamos estas dos cosas (se usan en GET y en POST)
+    options = LogisticRegressionModel.getOptions()
+    model_info = LogisticRegressionModel.getModelInfo()
+
+    if request.method == "POST":
+        try:
+            form_data = {
+                "price":    float(request.form["price"]),
+                "discount": float(request.form["discount"]),
+                "category": request.form["category"],
+                "payment":  request.form["payment"],
+            }
+            result = LogisticRegressionModel.predictPremium(**form_data)
+        except Exception as e:
+            print("Error en el formulario:", e)   # esto te ayuda a ver errores en la terminal
+
+    return render_template("logistic_application.html",
+                           result=result,
+                           form_data=form_data,
+                           model_info=model_info,
+                           options=options)
 
 if __name__ == '__main__':
     app.run(debug=True)
