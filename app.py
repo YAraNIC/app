@@ -65,30 +65,29 @@ def logistic_concepts():
 
 @app.route('/logistic-application', methods=["GET", "POST"])
 def logistic_application():
-    result = None
+    result    = None
     form_data = {}
-    
-    # Siempre cargamos estas dos cosas (se usan en GET y en POST)
-    options = LogisticRegressionModel.getOptions()
+    options    = LogisticRegressionModel.getOptions()
     model_info = LogisticRegressionModel.getModelInfo()
 
     if request.method == "POST":
         try:
             form_data = {
-                "price":    float(request.form["price"]),
-                "discount": float(request.form["discount"]),
-                "category": request.form["category"],
-                "payment":  request.form["payment"],
+                "price":      float(request.form["price"]),
+                "category":   request.form["category"],
+                "payment":    request.form["payment"],
+                "month":      int(request.form["month"]),
+                "is_weekend": int(request.form["is_weekend"]),
             }
-            result = LogisticRegressionModel.predictPremium(**form_data)
+            result = LogisticRegressionModel.predictSavings(**form_data)
         except Exception as e:
-            print("Error en el formulario:", e)   # esto te ayuda a ver errores en la terminal
+            print("Error en formulario:", e)
 
     return render_template("logistic_application.html",
                            result=result,
                            form_data=form_data,
-                           model_info=model_info,
-                           options=options)
+                           options=options,
+                           model_info=model_info)
 
 if __name__ == '__main__':
     app.run(debug=True)

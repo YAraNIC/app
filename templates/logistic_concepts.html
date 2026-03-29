@@ -3,11 +3,10 @@
 
 {% block content %}
 
-<!-- HEADER -->
 <section class="py-5 text-white" style="background: linear-gradient(135deg, #198754, #20c997);">
     <div class="container py-3">
         <h1 class="fw-bold"><i class="bi bi-book me-2"></i>Basic Concepts</h1>
-        <p class="lead mb-0">Understanding Logistic Regression applied to E-Commerce Purchase Prediction.</p>
+        <p class="lead mb-0">Understanding Logistic Regression applied to E-Commerce Savings Prediction.</p>
     </div>
 </section>
 
@@ -15,65 +14,42 @@
     <div class="container">
         <div class="row g-4">
 
-            <!-- WHAT IS LOGISTIC REGRESSION -->
+            <!-- WHAT IS -->
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
-                        <h4 class="fw-bold mb-3">
-                            <i class="bi bi-question-circle me-2 text-success"></i>What is Logistic Regression?
-                        </h4>
+                        <h4 class="fw-bold mb-3"><i class="bi bi-question-circle me-2 text-success"></i>What is Logistic Regression?</h4>
                         <p class="text-muted">
                             Logistic Regression is a supervised ML algorithm used for <strong>binary classification</strong> —
-                            it predicts whether something belongs to one of two categories (0 or 1, Yes or No, True or False).
+                            it predicts whether something belongs to one of two categories (0 or 1).
                             Unlike Linear Regression which outputs a continuous number, Logistic Regression outputs a
-                            <strong>probability</strong> between 0 and 1.
+                            <strong>probability between 0 and 1</strong> using the Sigmoid function.
                         </p>
                         <div class="alert alert-success mb-0">
-                            <strong>In this model:</strong> We predict whether an e-commerce purchase is
-                            <em>Premium</em> (Final Price ≥ 300 Rs.) or <em>Standard</em> (Final Price &lt; 300 Rs.)
-                            based on the product price, discount, category and payment method.
+                            <strong>In this model:</strong> We predict whether an e-commerce purchase will generate
+                            <em>High Savings</em> (discount ≥ 60 Rs.) or <em>Low Savings</em> based on
+                            product price, category, payment method, purchase month, and whether it's a weekend.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- LR vs LOG REG -->
+            <!-- LINEAR VS LOGISTIC -->
             <div class="col-md-6">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-arrow-left-right me-2 text-success"></i>Linear vs Logistic Regression
-                        </h5>
+                        <h5 class="fw-bold mb-3"><i class="bi bi-arrow-left-right me-2 text-success"></i>Linear vs Logistic Regression</h5>
                         <div class="table-responsive">
                             <table class="table table-bordered text-center" style="font-size:0.85rem;">
                                 <thead class="table-light">
-                                    <tr>
-                                        <th></th>
-                                        <th>Linear Regression</th>
-                                        <th>Logistic Regression</th>
-                                    </tr>
+                                    <tr><th></th><th>Linear</th><th>Logistic</th></tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-start fw-semibold">Output</td>
-                                        <td>Continuous number</td>
-                                        <td>Probability (0–1)</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-semibold">Task</td>
-                                        <td>Regression</td>
-                                        <td>Classification</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-semibold">Example</td>
-                                        <td>Predict grade score</td>
-                                        <td>Predict Premium? Yes/No</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-start fw-semibold">Function</td>
-                                        <td>y = mx + b</td>
-                                        <td>σ(z) = 1 / (1 + e⁻ᶻ)</td>
-                                    </tr>
+                                    <tr><td class="text-start fw-semibold">Output</td><td>Continuous number</td><td>Probability (0–1)</td></tr>
+                                    <tr><td class="text-start fw-semibold">Task</td><td>Regression</td><td>Classification</td></tr>
+                                    <tr><td class="text-start fw-semibold">Example</td><td>Predict grade score</td><td>High Savings? Yes/No</td></tr>
+                                    <tr><td class="text-start fw-semibold">Formula</td><td>y = mx + b</td><td>σ(z) = 1/(1+e⁻ᶻ)</td></tr>
+                                    <tr><td class="text-start fw-semibold">Error metric</td><td>MSE / R²</td><td>Accuracy / F1</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -85,18 +61,24 @@
             <div class="col-md-6">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-graph-up me-2 text-success"></i>The Sigmoid Function
-                        </h5>
-                        <p class="text-muted">The key function that converts any number into a probability between 0 and 1:</p>
+                        <h5 class="fw-bold mb-3"><i class="bi bi-graph-up me-2 text-success"></i>The Sigmoid Function</h5>
+                        <p class="text-muted">Converts any number into a probability between 0 and 1:</p>
                         <div class="bg-dark text-white rounded p-3 text-center mb-3">
-                            <span class="font-monospace fs-5">σ(z) = 1 / (1 + e⁻ᶻ)</span>
+                            <div class="font-monospace fs-5">σ(z) = 1 / (1 + e⁻ᶻ)</div>
+                            <div class="mt-2 font-monospace" style="font-size:0.8rem;color:#aaa;">
+                                z = b₀ + b₁·Price + b₂·Category + b₃·Payment + b₄·Month + b₅·Weekend
+                            </div>
                         </div>
-                        <p class="text-muted">Where <strong>z = b₀ + b₁x₁ + b₂x₂ + ...</strong> (the linear combination of inputs).</p>
-                        <ul class="list-unstyled mt-2">
-                            <li class="mb-1"><i class="bi bi-arrow-right text-success me-2"></i>If σ(z) <strong>≥ 0.5</strong> → predict <span class="badge bg-success">Premium (1)</span></li>
-                            <li><i class="bi bi-arrow-right text-success me-2"></i>If σ(z) <strong>&lt; 0.5</strong> → predict <span class="badge bg-secondary">Standard (0)</span></li>
-                        </ul>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-success px-3">σ(z) ≥ 0.5</span>
+                                <span class="text-muted" style="font-size:0.85rem;">→ Predict <strong>High Savings</strong> (1)</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary px-3">σ(z) &lt; 0.5</span>
+                                <span class="text-muted" style="font-size:0.85rem;">→ Predict <strong>Low Savings</strong> (0)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,37 +87,42 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
-                        <h5 class="fw-bold mb-4">
-                            <i class="bi bi-table me-2 text-success"></i>Features Used in This Model
-                        </h5>
+                        <h5 class="fw-bold mb-4"><i class="bi bi-table me-2 text-success"></i>The 5 Features Used in This Model</h5>
                         <div class="row g-3">
-                            <div class="col-md-3 col-6">
+                            <div class="col-md col-6">
                                 <div class="card border-success border-opacity-25 bg-success bg-opacity-10 p-3 text-center h-100">
                                     <div class="fs-2 mb-2">💰</div>
                                     <p class="fw-semibold mb-1" style="font-size:0.85rem;">Price (Rs.)</p>
-                                    <p class="text-muted mb-1" style="font-size:0.78rem;">Original product price before discount</p>
+                                    <p class="text-muted mb-1" style="font-size:0.78rem;">Higher price = more room for big discounts in absolute value</p>
                                     <span class="badge bg-success">Strongest predictor</span>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-6">
-                                <div class="card border-warning border-opacity-25 bg-warning bg-opacity-10 p-3 text-center h-100">
-                                    <div class="fs-2 mb-2">🏷️</div>
-                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">Discount (%)</p>
-                                    <p class="text-muted mb-0" style="font-size:0.78rem;">Percentage discount applied to the product</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
+                            <div class="col-md col-6">
                                 <div class="card border-info border-opacity-25 bg-info bg-opacity-10 p-3 text-center h-100">
                                     <div class="fs-2 mb-2">🛍️</div>
                                     <p class="fw-semibold mb-1" style="font-size:0.85rem;">Category</p>
-                                    <p class="text-muted mb-0" style="font-size:0.78rem;">Product type: Electronics, Clothing, etc.</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">Electronics & Sports tend to have higher absolute savings than Books</p>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-6">
-                                <div class="card border-secondary border-opacity-25 bg-secondary bg-opacity-10 p-3 text-center h-100">
+                            <div class="col-md col-6">
+                                <div class="card border-warning border-opacity-25 bg-warning bg-opacity-10 p-3 text-center h-100">
                                     <div class="fs-2 mb-2">💳</div>
                                     <p class="fw-semibold mb-1" style="font-size:0.85rem;">Payment Method</p>
-                                    <p class="text-muted mb-0" style="font-size:0.78rem;">How the customer paid for the purchase</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">UPI & Net Banking show slightly higher savings patterns</p>
+                                </div>
+                            </div>
+                            <div class="col-md col-6">
+                                <div class="card border-primary border-opacity-25 bg-primary bg-opacity-10 p-3 text-center h-100">
+                                    <div class="fs-2 mb-2">📅</div>
+                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">Month</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">May & July show higher discount activity (seasonal patterns)</p>
+                                </div>
+                            </div>
+                            <div class="col-md col-6">
+                                <div class="card border-secondary border-opacity-25 bg-secondary bg-opacity-10 p-3 text-center h-100">
+                                    <div class="fs-2 mb-2">📆</div>
+                                    <p class="fw-semibold mb-1" style="font-size:0.85rem;">Weekend</p>
+                                    <p class="text-muted mb-0" style="font-size:0.78rem;">Weekend purchases show slight increase in promotional discounts</p>
                                 </div>
                             </div>
                         </div>
@@ -143,67 +130,102 @@
                 </div>
             </div>
 
-            <!-- HOW IT WORKS -->
+            <!-- HOW IT LEARNS + METRICS -->
             <div class="col-md-6">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-gear me-2 text-warning"></i>How the Model Was Trained
-                        </h5>
+                        <h5 class="fw-bold mb-3"><i class="bi bi-gear me-2 text-warning"></i>How the Model Was Trained</h5>
                         <div class="d-flex flex-column gap-3">
                             <div class="d-flex gap-3 align-items-start">
                                 <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
                                     style="width:32px;height:32px;background:#198754;font-weight:600;font-size:0.85rem;">1</div>
                                 <div><strong>Dataset</strong><br>
-                                <small class="text-muted">3,660 real e-commerce transactions with price, discount, category and payment method.</small></div>
+                                <small class="text-muted">3,660 e-commerce transactions. Target: savings ≥ 60 Rs. → 1,095 High / 2,565 Low.</small></div>
                             </div>
                             <div class="d-flex gap-3 align-items-start">
                                 <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
                                     style="width:32px;height:32px;background:#198754;font-weight:600;font-size:0.85rem;">2</div>
-                                <div><strong>Encoding + Scaling</strong><br>
-                                <small class="text-muted">Categories and payment methods were label-encoded. Numeric features were standardized with StandardScaler.</small></div>
+                                <div><strong>Feature Engineering</strong><br>
+                                <small class="text-muted">Extracted month and is_weekend from Purchase_Date. Label-encoded Category and Payment Method.</small></div>
                             </div>
                             <div class="d-flex gap-3 align-items-start">
                                 <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
                                     style="width:32px;height:32px;background:#198754;font-weight:600;font-size:0.85rem;">3</div>
-                                <div><strong>Train / Test Split</strong><br>
-                                <small class="text-muted">80% training (2,928 rows), 20% testing (732 rows). Random state = 42.</small></div>
+                                <div><strong>StandardScaler</strong><br>
+                                <small class="text-muted">All features normalized to mean=0, std=1 so no single feature dominates due to scale.</small></div>
                             </div>
                             <div class="d-flex gap-3 align-items-start">
                                 <div class="rounded-circle text-white d-flex align-items-center justify-content-center flex-shrink-0"
                                     style="width:32px;height:32px;background:#198754;font-weight:600;font-size:0.85rem;">4</div>
-                                <div><strong>Result</strong><br>
-                                <small class="text-muted">The model achieved <strong>99.18% accuracy</strong> on the test set, correctly classifying premium and standard purchases.</small></div>
+                                <div><strong>80/20 Train-Test Split</strong><br>
+                                <small class="text-muted">2,928 records for training, 732 for evaluation. Result: <strong>77% accuracy</strong> — realistic and credible.</small></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- METRICS -->
+            <!-- METRICS EXPLAINED -->
             <div class="col-md-6">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-bar-chart me-2 text-success"></i>Evaluation Metrics
-                        </h5>
-                        <div class="d-flex flex-column gap-3">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart me-2 text-success"></i>Evaluation Metrics</h5>
+                        <div class="d-flex flex-column gap-2">
                             <div class="bg-light rounded p-3">
-                                <p class="fw-semibold mb-1">Accuracy</p>
-                                <p class="text-muted mb-0" style="font-size:0.85rem;">Percentage of correct predictions out of all predictions. Our model: <strong>99.18%</strong>.</p>
+                                <p class="fw-semibold mb-1">Accuracy — 77%</p>
+                                <p class="text-muted mb-0" style="font-size:0.83rem;">77 out of every 100 predictions are correct. Realistic — a 99% would suggest the model is cheating.</p>
                             </div>
                             <div class="bg-light rounded p-3">
                                 <p class="fw-semibold mb-1">Precision</p>
-                                <p class="text-muted mb-0" style="font-size:0.85rem;">Of all purchases predicted as Premium, how many actually were? Avoids false positives.</p>
+                                <p class="text-muted mb-0" style="font-size:0.83rem;">Of all purchases predicted as "High Savings", how many actually were? Penalizes false alarms.</p>
                             </div>
                             <div class="bg-light rounded p-3">
                                 <p class="fw-semibold mb-1">Recall</p>
-                                <p class="text-muted mb-0" style="font-size:0.85rem;">Of all actual Premium purchases, how many did the model catch? Avoids false negatives.</p>
+                                <p class="text-muted mb-0" style="font-size:0.83rem;">Of all actual "High Savings" purchases, how many did the model detect? Penalizes missed cases.</p>
                             </div>
                             <div class="bg-light rounded p-3">
-                                <p class="fw-semibold mb-1">Confusion Matrix</p>
-                                <p class="text-muted mb-0" style="font-size:0.85rem;">Table showing True Positives, True Negatives, False Positives and False Negatives side by side.</p>
+                                <p class="fw-semibold mb-1">F1-Score</p>
+                                <p class="text-muted mb-0" style="font-size:0.83rem;">Harmonic mean of Precision and Recall. Best single metric when classes are imbalanced.</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCENARIOS -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-lightning me-2 text-warning"></i>How Inputs Affect the Prediction</h5>
+                        <p class="text-muted mb-3" style="font-size:0.85rem;">The model probability changes significantly across different combinations — this is what makes it useful:</p>
+                        <div class="table-responsive">
+                            <table class="table table-hover" style="font-size:0.85rem;">
+                                <thead class="table-light">
+                                    <tr><th>Category</th><th>Payment</th><th>Price</th><th>Month</th><th>Weekend</th><th>Probability</th><th>Result</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Electronics</td><td>Credit Card</td><td>Rs. 450</td><td>January</td><td>No</td>
+                                        <td><div class="progress" style="height:8px;"><div class="progress-bar bg-success" style="width:62%;"></div></div><small>61.6%</small></td>
+                                        <td><span class="badge bg-success">High Savings</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sports</td><td>Debit Card</td><td>Rs. 300</td><td>July</td><td>No</td>
+                                        <td><div class="progress" style="height:8px;"><div class="progress-bar bg-warning" style="width:31%;"></div></div><small>31.1%</small></td>
+                                        <td><span class="badge bg-secondary">Low Savings</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Clothing</td><td>Cash on Delivery</td><td>Rs. 200</td><td>March</td><td>No</td>
+                                        <td><div class="progress" style="height:8px;"><div class="progress-bar bg-warning" style="width:15%;"></div></div><small>14.5%</small></td>
+                                        <td><span class="badge bg-secondary">Low Savings</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Books</td><td>UPI</td><td>Rs. 50</td><td>June</td><td>Yes</td>
+                                        <td><div class="progress" style="height:8px;"><div class="progress-bar bg-danger" style="width:6%;"></div></div><small>5.7%</small></td>
+                                        <td><span class="badge bg-secondary">Low Savings</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -211,15 +233,12 @@
 
         </div>
 
-        <!-- CTA -->
         <div class="text-center mt-5">
-            <p class="text-muted mb-3">Ready to test the model?</p>
-            <a href="/logistic-application" class="btn btn-lg text-white px-5"
-               style="background: linear-gradient(135deg,#198754,#20c997);">
-                <i class="bi bi-calculator me-2"></i>Go to Purchase Predictor
+            <p class="text-muted mb-3">Ready to test the model with your own values?</p>
+            <a href="/logistic-application" class="btn btn-lg text-white px-5" style="background:linear-gradient(135deg,#198754,#20c997);">
+                <i class="bi bi-calculator me-2"></i>Go to Savings Predictor
             </a>
         </div>
     </div>
 </section>
-
 {% endblock %}

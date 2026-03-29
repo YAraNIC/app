@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
-{% block title %}Purchase Predictor — E-Commerce{% endblock %}
+{% block title %}Savings Predictor — E-Commerce{% endblock %}
 
 {% block content %}
 
-<!-- HEADER -->
 <section class="py-5 text-white" style="background: linear-gradient(135deg, #198754, #20c997);">
     <div class="container py-3">
-        <h1 class="fw-bold"><i class="bi bi-cart-check me-2"></i>Purchase Predictor</h1>
-        <p class="lead mb-0">Predict whether an e-commerce purchase is <strong>Premium</strong> or <strong>Standard</strong> using Logistic Regression.</p>
+        <h1 class="fw-bold"><i class="bi bi-piggy-bank me-2"></i>Savings Predictor</h1>
+        <p class="lead mb-0">Predict whether an e-commerce purchase will generate <strong>High Savings</strong> (≥ 60 Rs. off) using Logistic Regression.</p>
     </div>
 </section>
 
@@ -20,7 +19,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-bottom py-3">
                         <h5 class="fw-bold mb-0">
-                            <i class="bi bi-sliders text-success me-2"></i>Enter Purchase Data
+                            <i class="bi bi-sliders text-success me-2"></i>Enter Purchase Details
                         </h5>
                     </div>
                     <div class="card-body p-4">
@@ -29,25 +28,12 @@
                             <!-- Price -->
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">
-                                    Price (Rs.)
-                                    <span class="badge bg-success ms-1">10 – 500</span>
+                                    Price (Rs.) <span class="badge bg-success ms-1">10 – 500</span>
                                 </label>
                                 <input type="number" class="form-control" name="price"
                                     min="10" max="500" step="0.01" placeholder="e.g. 350.00"
                                     value="{{ form_data.get('price', '') }}" required>
-                                <div class="form-text">Original product price before discount.</div>
-                            </div>
-
-                            <!-- Discount -->
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">
-                                    Discount (%)
-                                    <span class="badge bg-warning text-dark ms-1">0 – 50</span>
-                                </label>
-                                <input type="number" class="form-control" name="discount"
-                                    min="0" max="50" step="5" placeholder="e.g. 20"
-                                    value="{{ form_data.get('discount', '') }}" required>
-                                <div class="form-text">Discount percentage applied to the product.</div>
+                                <div class="form-text">Original product price before any discount.</div>
                             </div>
 
                             <!-- Category -->
@@ -56,30 +42,55 @@
                                 <select class="form-select" name="category" required>
                                     <option value="" disabled {% if not form_data.get('category') %}selected{% endif %}>Select a category...</option>
                                     {% for cat in options.categories %}
-                                    <option value="{{ cat }}" {% if form_data.get('category') == cat %}selected{% endif %}>
-                                        {{ cat }}
-                                    </option>
+                                    <option value="{{ cat }}" {% if form_data.get('category') == cat %}selected{% endif %}>{{ cat }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
 
-                            <!-- Payment Method -->
+                            <!-- Payment -->
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Payment Method</label>
                                 <select class="form-select" name="payment" required>
                                     <option value="" disabled {% if not form_data.get('payment') %}selected{% endif %}>Select a payment method...</option>
                                     {% for pay in options.payments %}
-                                    <option value="{{ pay }}" {% if form_data.get('payment') == pay %}selected{% endif %}>
-                                        {{ pay }}
-                                    </option>
+                                    <option value="{{ pay }}" {% if form_data.get('payment') == pay %}selected{% endif %}>{{ pay }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
 
-                            <div class="d-grid mt-4">
+                            <!-- Month -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Purchase Month</label>
+                                <select class="form-select" name="month" required>
+                                    <option value="" disabled {% if not form_data.get('month') %}selected{% endif %}>Select a month...</option>
+                                    {% for num, name in options.months.items() %}
+                                    <option value="{{ num }}" {% if form_data.get('month')|string == num|string %}selected{% endif %}>{{ name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Month of the purchase (affects seasonal promotions).</div>
+                            </div>
+
+                            <!-- Weekend -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Day of Purchase</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="is_weekend" id="weekday" value="0"
+                                            {% if form_data.get('is_weekend', '0') == '0' %}checked{% endif %} required>
+                                        <label class="form-check-label" for="weekday">Weekday (Mon–Fri)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="is_weekend" id="weekend" value="1"
+                                            {% if form_data.get('is_weekend') == '1' %}checked{% endif %}>
+                                        <label class="form-check-label" for="weekend">Weekend (Sat–Sun)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
                                 <button type="submit" class="btn btn-lg fw-semibold text-white"
                                     style="background: linear-gradient(135deg,#198754,#20c997);">
-                                    <i class="bi bi-send me-2"></i>Predict Purchase Type
+                                    <i class="bi bi-send me-2"></i>Predict Savings
                                 </button>
                             </div>
                         </form>
@@ -90,77 +101,89 @@
             <!-- RESULT + MODEL INFO -->
             <div class="col-md-7">
 
-                <!-- RESULT -->
                 {% if result is not none %}
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-4 text-center">
-                        <p class="text-muted fw-semibold mb-2" style="font-size:0.85rem;letter-spacing:0.08em;">PREDICTION RESULT</p>
+                        <p class="text-muted fw-semibold mb-2" style="font-size:0.82rem;letter-spacing:0.08em;">PREDICTION RESULT</p>
 
                         {% if result.prediction == 1 %}
-                            <div class="mb-2">
-                                <span style="font-size:3.5rem;">🏆</span>
-                            </div>
-                            <h2 class="fw-bold text-success mb-1">Premium Purchase</h2>
-                            <p class="text-muted mb-3">This purchase is classified as <strong>high-value</strong> (Final Price ≥ 300 Rs.)</p>
-                            <div class="d-inline-block bg-success text-white rounded px-4 py-2 mb-3">
-                                <span class="fs-4 fw-bold">{{ result.probability }}%</span>
-                                <span class="ms-2">confidence</span>
+                            <div class="mb-2" style="font-size:3rem;">🤑</div>
+                            <h2 class="fw-bold text-success mb-1">High Savings!</h2>
+                            <p class="text-muted mb-3">This purchase is likely to generate a discount <strong>≥ 60 Rs.</strong></p>
+                            <div class="d-inline-block text-white rounded px-4 py-2 mb-3" style="background:#198754;">
+                                <span class="fs-3 fw-bold">{{ result.probability }}%</span>
+                                <span class="ms-2">probability</span>
                             </div>
                         {% else %}
-                            <div class="mb-2">
-                                <span style="font-size:3.5rem;">🛒</span>
-                            </div>
-                            <h2 class="fw-bold text-secondary mb-1">Standard Purchase</h2>
-                            <p class="text-muted mb-3">This purchase is classified as <strong>standard</strong> (Final Price &lt; 300 Rs.)</p>
+                            <div class="mb-2" style="font-size:3rem;">🛒</div>
+                            <h2 class="fw-bold text-secondary mb-1">Low Savings</h2>
+                            <p class="text-muted mb-3">This purchase is unlikely to generate a discount ≥ 60 Rs.</p>
                             <div class="d-inline-block bg-secondary text-white rounded px-4 py-2 mb-3">
-                                <span class="fs-4 fw-bold">{{ 100 - result.probability }}%</span>
-                                <span class="ms-2">confidence</span>
+                                <span class="fs-3 fw-bold">{{ 100 - result.probability }}%</span>
+                                <span class="ms-2">probability of Low Savings</span>
                             </div>
                         {% endif %}
 
                         <!-- Probability bar -->
-                        <div class="mt-2 mb-3">
-                            <div class="d-flex justify-content-between mb-1" style="font-size:0.78rem;">
-                                <span class="text-muted">Standard</span>
-                                <span class="text-muted">Premium</span>
+                        <div class="mt-1 mb-3 px-2">
+                            <div class="d-flex justify-content-between mb-1" style="font-size:0.75rem;color:#888;">
+                                <span>Low Savings (0%)</span>
+                                <span>High Savings (100%)</span>
                             </div>
-                            <div class="progress" style="height:12px;">
-                                <div class="progress-bar bg-success" style="width:{{ result.probability }}%;"></div>
+                            <div class="progress" style="height:14px;border-radius:8px;">
+                                <div class="progress-bar {% if result.prediction == 1 %}bg-success{% else %}bg-secondary{% endif %}"
+                                    style="width:{{ result.probability }}%;border-radius:8px;transition:width 1s ease;">
+                                </div>
                             </div>
                             <div class="text-center mt-1" style="font-size:0.78rem;color:#888;">
-                                Premium probability: {{ result.probability }}%
+                                High Savings probability: <strong>{{ result.probability }}%</strong>
                             </div>
                         </div>
 
                         <hr class="my-3">
 
                         <!-- Input summary -->
+                        <p class="text-muted mb-2" style="font-size:0.78rem;font-weight:500;letter-spacing:0.05em;">INPUTS USED</p>
                         <div class="row g-2 text-center">
-                            <div class="col-6 col-md-3">
+                            <div class="col-4">
                                 <div class="bg-light rounded p-2">
                                     <div class="fw-bold">Rs. {{ form_data.price }}</div>
                                     <small class="text-muted">Price</small>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-4">
                                 <div class="bg-light rounded p-2">
-                                    <div class="fw-bold">{{ form_data.discount }}%</div>
-                                    <small class="text-muted">Discount</small>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <div class="bg-light rounded p-2">
-                                    <div class="fw-bold" style="font-size:0.8rem;">{{ form_data.category }}</div>
+                                    <div class="fw-bold" style="font-size:0.82rem;">{{ form_data.category }}</div>
                                     <small class="text-muted">Category</small>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-4">
                                 <div class="bg-light rounded p-2">
-                                    <div class="fw-bold" style="font-size:0.8rem;">{{ form_data.payment }}</div>
+                                    <div class="fw-bold" style="font-size:0.82rem;">{{ form_data.payment }}</div>
                                     <small class="text-muted">Payment</small>
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="bg-light rounded p-2">
+                                    <div class="fw-bold">{{ options.months[form_data.month | int] }}</div>
+                                    <small class="text-muted">Month</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-light rounded p-2">
+                                    <div class="fw-bold">{{ "Weekend" if form_data.is_weekend == '1' else "Weekday" }}</div>
+                                    <small class="text-muted">Day type</small>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card border-0 shadow-sm bg-light mb-4">
+                    <div class="card-body p-4 text-center d-flex flex-column justify-content-center" style="min-height:220px;">
+                        <i class="bi bi-piggy-bank text-muted mb-3" style="font-size:3rem;"></i>
+                        <h5 class="text-muted">Your result will appear here</h5>
+                        <p class="text-muted mb-0">Fill in the purchase details and click <strong>Predict Savings</strong>.</p>
                     </div>
                 </div>
                 {% endif %}
@@ -168,14 +191,12 @@
                 <!-- MODEL INFO -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-bottom py-3">
-                        <h6 class="fw-bold mb-0">
-                            <i class="bi bi-info-circle text-success me-2"></i>Model Information
-                        </h6>
+                        <h6 class="fw-bold mb-0"><i class="bi bi-info-circle text-success me-2"></i>Model Information</h6>
                     </div>
                     <div class="card-body p-4">
                         <p class="text-muted mb-3" style="font-size:0.85rem;">
-                            Logistic Regression trained on 3,660 e-commerce transactions.
-                            Target: <strong>Premium</strong> = Final Price ≥ 300 Rs.
+                            Logistic Regression trained on <strong>3,660</strong> e-commerce transactions.
+                            Target: savings ≥ 60 Rs. &nbsp;|&nbsp; 5 features including temporal variables.
                         </p>
 
                         <!-- Metrics -->
@@ -205,9 +226,17 @@
                         {% for feature, coef in model_info.coefficients.items() %}
                         <div class="d-flex justify-content-between align-items-center py-1 border-bottom" style="font-size:0.82rem;">
                             <span class="text-muted">{{ feature }}</span>
-                            <span class="fw-semibold {% if coef > 0 %}text-success{% else %}text-danger{% endif %}">
-                                {{ coef }}
-                            </span>
+                            <div class="d-flex align-items-center gap-2">
+                                <div style="width:80px;">
+                                    <div class="progress" style="height:6px;">
+                                        <div class="progress-bar {% if coef > 0 %}bg-success{% else %}bg-danger{% endif %}"
+                                            style="width:{{ [coef|abs * 40, 100]|min }}%;"></div>
+                                    </div>
+                                </div>
+                                <span class="fw-semibold {% if coef > 0 %}text-success{% else %}text-danger{% endif %}" style="min-width:55px;text-align:right;">
+                                    {{ coef }}
+                                </span>
+                            </div>
                         </div>
                         {% endfor %}
 
@@ -221,5 +250,4 @@
         </div>
     </div>
 </section>
-
 {% endblock %}
