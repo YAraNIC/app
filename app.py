@@ -12,6 +12,24 @@ def home():
 def use_cases():
     return render_template('cases.html')
 
+# ==================== Change Menu use Cases ====================
+@app.route('/use-cases/case1')
+def case1():
+    return render_template('case1.html')
+
+@app.route('/use-cases/case2')
+def case2():
+    return render_template('case2.html')
+
+@app.route('/use-cases/case3')
+def case3():
+    return render_template('case3.html')
+
+@app.route('/use-cases/case4')
+def case4():
+    return render_template('case4.html')
+# =====================================================================
+
 @app.route('/concepts')
 def concepts():
     return render_template('concepts.html')
