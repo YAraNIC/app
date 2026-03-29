@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import LinearRegression
+
 import MentalHealth
 
 app = Flask(__name__)
@@ -34,14 +34,6 @@ def case4():
 def concepts():
     return render_template('concepts.html')
 
-@app.route('/predict', methods=["GET", "POST"])
-def predict():
-    result = None
-    hours = None
-    if request.method == "POST":
-        hours = float(request.form["hours"])
-        result = round(LinearRegression.calculateGrade(hours), 2)
-    return render_template("predict.html", result=result, hours=hours)
 
 @app.route('/burnout-concepts')
 def burnout_concepts():

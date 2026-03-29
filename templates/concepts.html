@@ -1,129 +1,19 @@
 {% extends "layout.html" %}
-{% block title %}Basic Concepts — Linear Regression{% endblock %}
+{% block title %}Key Machine Learning Concepts{% endblock %}
 
 {% block content %}
 
 <section class="bg-success text-white py-5">
     <div class="container py-3">
-        <h1 class="fw-bold"><i class="bi bi-book me-2"></i>Basic Concepts</h1>
-        <p class="lead mb-0">Understanding Linear Regression — the foundation of supervised learning.</p>
+        <h1 class="fw-bold"><i class="bi bi-book me-2"></i>Key Machine Learning Concepts</h1>
+        <p class="lead mb-0">The essential concepts you need to understand Machine Learning.</p>
     </div>
 </section>
 
 <section class="py-5">
     <div class="container">
-        <div class="row g-4">
-
-            <!-- WHAT IS IT -->
-            <div class="col-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <h4 class="fw-bold mb-3"><i class="bi bi-question-circle text-primary me-2"></i>What is Linear Regression?</h4>
-                        <p class="text-muted">Linear Regression is a supervised ML algorithm that models the relationship between a <strong>dependent variable</strong> (output) and one or more <strong>independent variables</strong> (inputs) by fitting a straight line through the data.</p>
-                        <div class="alert alert-primary">
-                            <strong>In this project:</strong> We predict a student's <em>Final Grade</em> (output) based on the number of <em>Study Hours</em> (input).
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FORMULA -->
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3"><i class="bi bi-function text-success me-2"></i>The Formula</h5>
-                        <div class="bg-dark text-white rounded p-3 text-center mb-3">
-                            <span class="fs-4 font-monospace">y = mx + b</span>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex gap-3 align-items-start px-0">
-                                <span class="badge bg-primary rounded-pill mt-1">y</span>
-                                <span><strong>Dependent variable</strong> — the value we want to predict (Final Grade)</span>
-                            </li>
-                            <li class="list-group-item d-flex gap-3 align-items-start px-0">
-                                <span class="badge bg-success rounded-pill mt-1">x</span>
-                                <span><strong>Independent variable</strong> — the input we know (Study Hours)</span>
-                            </li>
-                            <li class="list-group-item d-flex gap-3 align-items-start px-0">
-                                <span class="badge bg-warning text-dark rounded-pill mt-1">m</span>
-                                <span><strong>Slope</strong> — how much y changes for each unit increase in x</span>
-                            </li>
-                            <li class="list-group-item d-flex gap-3 align-items-start px-0">
-                                <span class="badge bg-danger rounded-pill mt-1">b</span>
-                                <span><strong>Intercept</strong> — the value of y when x = 0</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- HOW IT WORKS -->
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3"><i class="bi bi-gear text-warning me-2"></i>How the Model Learns</h5>
-                        <div class="d-flex flex-column gap-3">
-                            <div class="d-flex gap-3 align-items-start">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px;font-size:0.85rem;font-weight:600;">1</div>
-                                <div><strong>Collect data</strong><br><small class="text-muted">Training set: 20 students with their study hours and final grades.</small></div>
-                            </div>
-                            <div class="d-flex gap-3 align-items-start">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px;font-size:0.85rem;font-weight:600;">2</div>
-                                <div><strong>Fit the line</strong><br><small class="text-muted">The algorithm finds the best m and b that minimizes prediction errors (MSE).</small></div>
-                            </div>
-                            <div class="d-flex gap-3 align-items-start">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px;font-size:0.85rem;font-weight:600;">3</div>
-                                <div><strong>Make predictions</strong><br><small class="text-muted">Input new hours → the model calculates the estimated grade using the formula.</small></div>
-                            </div>
-                            <div class="d-flex gap-3 align-items-start">
-                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px;font-size:0.85rem;font-weight:600;"><i class="bi bi-check"></i></div>
-                                <div><strong>Result</strong><br><small class="text-muted">A numeric grade between 1.0 and 5.0 based on the pattern in the data.</small></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DATASET -->
-            <div class="col-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold mb-3"><i class="bi bi-table text-primary me-2"></i>Training Dataset (Sample)</h5>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered text-center">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th>Study Hours</th>
-                                        <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
-                                        <th>8</th><th>10</th><th>14</th><th>18</th><th>20</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="fw-semibold">Final Grade</td>
-                                        <td>1.0</td><td>1.5</td><td>1.8</td><td>2.2</td><td>2.5</td>
-                                        <td>3.0</td><td>3.8</td><td>4.5</td><td>5.0</td><td>5.0</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p class="text-muted mt-2 mb-0"><small>Full dataset: 20 students. The more hours studied, the higher the predicted grade.</small></p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- CTA -->
-        <div class="text-center mt-5">
-            <p class="text-muted mb-3">Ready to try the model?</p>
-            <a href="/predict" class="btn btn-success btn-lg px-5">
-                <i class="bi bi-calculator me-2"></i>Go to Prediction Tool
-            </a>
-        </div>
-
-        <!-- ==================== NUEVA SECCIÓN: MACHINE LEARNING CONCEPTS ==================== -->
-        <div class="mt-6 pt-5 border-top">
+        <!-- ==================== KEY MACHINE LEARNING CONCEPTS ==================== -->
+        <div class="mt-6 pt-5">
             <h2 class="text-center fw-bold mb-5">Key Machine Learning Concepts</h2>
             
             <div class="row g-4">
@@ -178,7 +68,6 @@
 
             </div>
         </div>
-
     </div>
 </section>
 
