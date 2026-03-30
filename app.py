@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import LogisticRegressionModel
 import MentalHealth
+import AssignedClassificationModel
 
 app = Flask(__name__)
 
@@ -87,6 +88,32 @@ def logistic_application():
                            result=result,
                            form_data=form_data,
                            options=options,
+                           model_info=model_info)
+
+@app.route('/assigned-concepts')
+def assigned_concepts():
+    return render_template('assigned_concepts.html')
+
+@app.route('/assigned-application', methods=["GET", "POST"])
+def assigned_application():
+    result = None
+    form_data = {}
+    model_info = AssignedClassificationModel.getModelInfo()
+
+    if request.method == "POST":
+        try:
+            form_data = {
+                "frequency": float(request.form["frequency"]),
+                "avg_order": float(request.form["avg_order"]),
+                "days_since_last": float(request.form["days_since_last"]),
+            }
+            result = AssignedClassificationModel.predictChurn(**form_data)
+        except Exception as e:
+            print("Error en formulario Assigned:", e)
+
+    return render_template("assigned_application.html",
+                           result=result,
+                           form_data=form_data,
                            model_info=model_info)
 
 if __name__ == '__main__':

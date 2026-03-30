@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block title %}Basic Concepts — Assigned Classification Model{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-white" style="background: linear-gradient(135deg, #0d6efd, #6f42c1);">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-book me-2"></i>Basic Concepts</h1>
+        <p class="lead mb-0">Understanding SGDClassifier for Customer Churn Prediction.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-3"><i class="bi bi-question-circle me-2 text-primary"></i>What is SGDClassifier?</h4>
+                        <p class="text-muted">
+                            SGDClassifier is a very fast linear classifier that uses Stochastic Gradient Descent. 
+                            It is perfect for large datasets and can behave exactly like Logistic Regression when we set <code>loss='log_loss'</code>.
+                        </p>
+                        <div class="alert alert-primary">
+                            <strong>In this model:</strong> We predict if a customer will <strong>Churn</strong> (leave) or <strong>Stay</strong> 
+                            using frequency of purchases, average order value and days since last purchase.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linear vs SGD -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-arrow-left-right me-2 text-primary"></i>LogisticRegression vs SGDClassifier</h5>
+                        <table class="table table-bordered text-center" style="font-size:0.85rem;">
+                            <thead class="table-light"><tr><th></th><th>LogisticRegression</th><th>SGDClassifier</th></tr></thead>
+                            <tbody>
+                                <tr><td class="text-start fw-semibold">Speed on big data</td><td>Slow</td><td>Very Fast</td></tr>
+                                <tr><td class="text-start fw-semibold">Memory usage</td><td>High</td><td>Low</td></tr>
+                                <tr><td class="text-start fw-semibold">Online learning</td><td>No</td><td>Yes (partial_fit)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-gear me-2 text-warning"></i>How the Model Was Trained</h5>
+                        <div class="d-flex flex-column gap-3">
+                            <div><strong>1.</strong> Synthetic dataset of 15 customers</div>
+                            <div><strong>2.</strong> Features: frequency, avg_order, days_since_last</div>
+                            <div><strong>3.</strong> SGDClassifier with loss='log_loss' (behaves as Logistic Regression)</div>
+                            <div><strong>4.</strong> Result: Fast training + good accuracy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/assigned-application" class="btn btn-lg text-white px-5"
+               style="background: linear-gradient(135deg,#0d6efd,#6f42c1);">
+                <i class="bi bi-calculator me-2"></i>Go to Application
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
