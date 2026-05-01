@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import LogisticRegressionModel
 import MentalHealth
 import AssignedClassificationModel
+import KMeansModel
 
 app = Flask(__name__)
 
@@ -116,5 +117,40 @@ def assigned_application():
                            form_data=form_data,
                            model_info=model_info)
 
+
+# ===================== UNSUPERVISED - K-MEANS =====================
+
+@app.route('/unsupervised-concepts')
+def unsupervised_concepts():
+    return render_template('unsupervised_concepts.html')
+
+@app.route('/kmeans-manual')
+def kmeans_manual():
+    return render_template('kmeans_manual.html')
+
+@app.route('/kmeans-application', methods=["GET", "POST"])
+def kmeans_application():
+    result = None
+    form_data = {}
+    model_info = KMeansModel.get_model_info()
+    
+    if request.method == "POST":
+        try:
+            age = float(request.form.get("age"))
+            annual_income = float(request.form.get("annual_income"))
+            cluster = KMeansModel.predict_cluster(age, annual_income)
+            
+            result = {
+                "age": age,
+                "annual_income": annual_income,
+                "cluster": cluster + 1   # Show as 1, 2, 3 instead of 0,1,2
+            }
+        except Exception as e:
+            print("Error predicting cluster:", e)
+    
+    return render_template("kmeans_application.html",
+                           result=result,
+                           form_data=form_data,
+                           model_info=model_info)
 if __name__ == '__main__':
     app.run(debug=True)

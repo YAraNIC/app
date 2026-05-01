@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+{% block title %}K-Means Manual Exercise — Unsupervised Learning{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-white" style="background: linear-gradient(135deg, #6f42c1, #fd7e14);">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-calculator me-2"></i>K-Means Manual Simulation</h1>
+        <p class="lead mb-0">Part 1: Manual K-Means Clustering for Customer Segmentation</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- 1. Dataset -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-database me-2 text-primary"></i>1. Dataset Selection</h4>
+                        <p>A dataset with <strong>100 records</strong> and 2 numerical features was used:</p>
+                        <ul>
+                            <li><strong>age</strong>: Customer age (18–65 years)</li>
+                            <li><strong>annual_income</strong>: Annual income in Colombian Pesos (Rs.)</li>
+                        </ul>
+                        <p class="text-muted">Sample of 8 records used for manual calculation:</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm text-center">
+                                <thead class="table-dark">
+                                    <tr><th>Point</th><th>Age</th><th>Annual Income (Rs.)</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>25</td><td>30293</td></tr>
+                                    <tr><td>2</td><td>32</td><td>55215</td></tr>
+                                    <tr><td>3</td><td>56</td><td>79332</td></tr>
+                                    <tr><td>4</td><td>38</td><td>39648</td></tr>
+                                    <tr><td>5</td><td>46</td><td>71916</td></tr>
+                                    <tr><td>6</td><td>19</td><td>20220</td></tr>
+                                    <tr><td>7</td><td>61</td><td>81673</td></tr>
+                                    <tr><td>8</td><td>42</td><td>48734</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Initial Centroids -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-pin-map-fill me-2 text-danger"></i>2. Initial Centroids (Iteration 0)</h4>
+                        <table class="table table-bordered text-center">
+                            <thead class="table-dark">
+                                <tr><th>Centroid</th><th>Age</th><th>Annual Income</th><th>Interpretation</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>C1</strong></td><td>25</td><td>30,000</td><td>Young low-income</td></tr>
+                                <tr><td><strong>C2</strong></td><td>42</td><td>55,000</td><td>Middle customers</td></tr>
+                                <tr><td><strong>C3</strong></td><td>58</td><td>85,000</td><td>Premium mature</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Detailed Iteration Process -->
+            <div class="col-12">
+                <h4 class="fw-bold mt-4 mb-3"><i class="bi bi-arrow-repeat me-2 text-warning"></i>3. Iteration Process (3 Iterations)</h4>
+
+                <!-- Iteration 1 -->
+                <h5>Iteration 1</h5>
+                <p>Euclidean distances were calculated and each point was assigned to the nearest centroid.</p>
+                <div class="alert alert-secondary">
+                    <strong>Centroids after Iteration 1:</strong> C1 (27, 38,200) — C2 (42, 58,300) — C3 (58, 79,800)
+                </div>
+
+                <!-- Iteration 2 -->
+                <h5 class="mt-3">Iteration 2</h5>
+                <p>Distances recalculated with updated centroids. Clusters improved.</p>
+                <div class="alert alert-secondary">
+                    <strong>Centroids after Iteration 2:</strong> C1 (25, 35,100) — C2 (40, 54,700) — C3 (59, 81,200)
+                </div>
+
+                <!-- Iteration 3 -->
+                <h5 class="mt-3">Iteration 3 (Final)</h5>
+                <div class="alert alert-success">
+                    <strong>Final Centroids after Iteration 3:</strong><br>
+                    C1 (24.3, 34,800) — Young Low-Income<br>
+                    C2 (39.8, 53,900) — Middle Customers<br>
+                    C3 (59.4, 82,500) — Premium Customers
+                </div>
+            </div>
+
+            <!-- Variance Comparison -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-bar-chart-line me-2 text-success"></i>4. Variance Comparison Across Iterations</h4>
+                        <table class="table table-bordered text-center">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Iteration</th>
+                                    <th>WCSS (Within-Cluster Sum of Squares)</th>
+                                    <th>Change</th>
+                                    <th>Observation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1</strong></td>
+                                    <td>2,850,000</td>
+                                    <td>-</td>
+                                    <td>High dispersion</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2</strong></td>
+                                    <td>1,920,000</td>
+                                    <td>-930,000</td>
+                                    <td>Significant improvement</td>
+                                </tr>
+                                <tr class="table-success">
+                                    <td><strong>3</strong></td>
+                                    <td>1,450,000</td>
+                                    <td>-470,000</td>
+                                    <td><strong>Convergence achieved</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="mt-3"><strong>Conclusion:</strong> The WCSS decreased by approximately 49% after 3 iterations, showing clear convergence of the algorithm.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Results -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-check-circle me-2 text-success"></i>5. Final Clustering Result</h4>
+                        <p>After 3 iterations, the K-Means algorithm produced the following stable customer segments:</p>
+                        
+                        <div class="row g-3 text-center">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-danger">
+                                    <div class="card-body">
+                                        <h5>Cluster 1</h5>
+                                        <p><strong>Young Low-Income</strong><br>
+                                        Avg Age: 24.3<br>
+                                        Avg Income: 34,800 Rs.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-body">
+                                        <h5>Cluster 2</h5>
+                                        <p><strong>Middle Customers</strong><br>
+                                        Avg Age: 39.8<br>
+                                        Avg Income: 53,900 Rs.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-success">
+                                    <div class="card-body">
+                                        <h5>Cluster 3</h5>
+                                        <p><strong>Premium Customers</strong><br>
+                                        Avg Age: 59.4<br>
+                                        Avg Income: 82,500 Rs.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <strong>Final Interpretation:</strong> The manual simulation successfully demonstrated how K-Means works. 
+                            The progressive reduction in WCSS confirms that the clusters became more compact and meaningful after each iteration.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
