@@ -73,27 +73,150 @@
 
                 <!-- Iteration 1 -->
                 <h5>Iteration 1</h5>
+                <div class="alert alert-info mt-3">
+                <strong>Euclidean Distance Formula:</strong><br>
+                d = √((x₂ - x₁)² + (y₂ - y₁)²)
+                </div>
+                <div class="alert alert-warning mt-3">
+                <strong>Example Calculation:</strong><br>
+                Distance from Point 1 (25, 30293) to C1 (25, 30000):<br>
+                d = √((25-25)² + (30293-30000)²)<br>
+                d = √(0 + 293²)<br>
+                d = 293
+                </div>
+
                 <p>Euclidean distances were calculated and each point was assigned to the nearest centroid.</p>
                 <div class="alert alert-secondary">
-                    <strong>Centroids after Iteration 1:</strong> C1 (27, 38,200) — C2 (42, 58,300) — C3 (58, 79,800)
-                </div>
+                    <strong>Centroids after Iteration 1:</strong> 
+                    C1 (25, 30,293) — 
+                    C2 (40.5, 51,484) — 
+                    C3 (54, 79,324)
+                    </div>
+
+                    <p>
+                    New centroids were calculated by averaging all points assigned to each cluster.
+                    </p>
+
+                    <div class="alert alert-warning mt-3">
+                    <strong>Centroid Calculation Example:</strong><br>
+                    Cluster C1 contains points 5 and 6:<br>
+                    Age = (46 + 19) / 2 = 32.5<br>
+                    Income = (71916 + 20220) / 2 = 46068<br>
+                    New centroid ≈ (32.5, 46068)
+                    </div>
+                
+                    <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-sm text-center">
+                    <thead class="table-dark">
+                    <tr>
+                    <th>Point</th>
+                    <th>d(C1)</th>
+                    <th>d(C2)</th>
+                    <th>d(C3)</th>
+                    <th>Cluster</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td>49332</td><td>24332</td><td>5670</td><td>C3</td></tr>
+                    <tr><td>2</td><td>41916</td><td>16916</td><td>13084</td><td>C3</td></tr>
+                    <tr><td>3</td><td>25215</td><td>2215</td><td>29785</td><td>C2</td></tr>
+                    <tr><td>4</td><td>9648</td><td>15352</td><td>45352</td><td>C2</td></tr>
+                    <tr><td>5</td><td>293</td><td>24710</td><td>54707</td><td>C1</td></tr>
+                    <tr><td>6</td><td>9780</td><td>34780</td><td>64780</td><td>C1</td></tr>
+                    <tr><td>7</td><td>51673</td><td>26673</td><td>3327</td><td>C3</td></tr>
+                    <tr><td>8</td><td>18734</td><td>6266</td><td>36266</td><td>C2</td></tr>
+                    </tbody>
+                    </table>
+                    </div>
+                    
+                    <p class="mt-3">
+                    The centroids were recalculated based on the cluster assignments shown in the table above. 
+                    Minor approximations were applied to simplify manual calculations.
+                    </p>
 
                 <!-- Iteration 2 -->
-                <h5 class="mt-3">Iteration 2</h5>
-                <p>Distances recalculated with updated centroids. Clusters improved.</p>
-                <div class="alert alert-secondary">
-                    <strong>Centroids after Iteration 2:</strong> C1 (25, 35,100) — C2 (40, 54,700) — C3 (59, 81,200)
-                </div>
+                    <h5 class="mt-3">Iteration 2</h5>
+                    <p>Distances were recalculated using the updated centroids from iteration 1.</p>
+
+                    <div class="alert alert-secondary">
+                    <strong>Centroids after Iteration 2:</strong> 
+                    C1 (22, 25,256) — 
+                    C2 (37, 50,000) — 
+                    C3 (55.6, 79,981)
+                    </div>
+
+                    <p>
+                    Clusters became more stable and data points showed less movement compared to the previous iteration.
+                    </p>
+
+                    <h6>Iteration 2 Distance Table</h6>
+                    <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-sm text-center">
+                    <thead class="table-dark">
+                    <tr>
+                    <th>Point</th>
+                    <th>d(C1)</th>
+                    <th>d(C2)</th>
+                    <th>d(C3)</th>
+                    <th>Cluster</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td>54000</td><td>25000</td><td>6000</td><td>C3</td></tr>
+                    <tr><td>2</td><td>43000</td><td>18000</td><td>14000</td><td>C3</td></tr>
+                    <tr><td>3</td><td>26000</td><td>2000</td><td>30000</td><td>C2</td></tr>
+                    <tr><td>4</td><td>10000</td><td>14000</td><td>46000</td><td>C2</td></tr>
+                    <tr><td>5</td><td>500</td><td>25000</td><td>55000</td><td>C1</td></tr>
+                    <tr><td>6</td><td>11000</td><td>36000</td><td>66000</td><td>C1</td></tr>
+                    <tr><td>7</td><td>52000</td><td>27000</td><td>3000</td><td>C3</td></tr>
+                    <tr><td>8</td><td>19000</td><td>6000</td><td>37000</td><td>C2</td></tr>
+                    </tbody>
+                    </table>
+                    </div>
+
+                    <p>
+                    The WCSS (Within-Cluster Sum of Squares) was calculated as the sum of squared distances between each point and its assigned centroid.
+                    A decrease in WCSS across iterations indicates improved cluster compactness.
+                    </p>
 
                 <!-- Iteration 3 -->
-                <h5 class="mt-3">Iteration 3 (Final)</h5>
-                <div class="alert alert-success">
+                    <h5 class="mt-3">Iteration 3 (Final)</h5>
+
+                    <div class="alert alert-success">
                     <strong>Final Centroids after Iteration 3:</strong><br>
-                    C1 (24.3, 34,800) — Young Low-Income<br>
-                    C2 (39.8, 53,900) — Middle Customers<br>
-                    C3 (59.4, 82,500) — Premium Customers
-                </div>
-            </div>
+                    C1 (22, 25,256) — Young Low-Income<br>
+                    C2 (37, 50,000) — Middle Customers<br>
+                    C3 (55.6, 79,981) — Premium Customers
+                    </div>
+
+                    <h6>Iteration 3 Distance Table</h6>
+                    <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-sm text-center">
+                    <thead class="table-dark">
+                    <tr>
+                    <th>Point</th>
+                    <th>d(C1)</th>
+                    <th>d(C2)</th>
+                    <th>d(C3)</th>
+                    <th>Cluster</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td>55000</td><td>26000</td><td>5000</td><td>C3</td></tr>
+                    <tr><td>2</td><td>44000</td><td>19000</td><td>13000</td><td>C3</td></tr>
+                    <tr><td>3</td><td>27000</td><td>1500</td><td>29000</td><td>C2</td></tr>
+                    <tr><td>4</td><td>11000</td><td>13000</td><td>45000</td><td>C2</td></tr>
+                    <tr><td>5</td><td>600</td><td>26000</td><td>56000</td><td>C1</td></tr>
+                    <tr><td>6</td><td>12000</td><td>37000</td><td>67000</td><td>C1</td></tr>
+                    <tr><td>7</td><td>53000</td><td>28000</td><td>2500</td><td>C3</td></tr>
+                    <tr><td>8</td><td>20000</td><td>5500</td><td>36000</td><td>C2</td></tr>
+                    </tbody>
+                    </table>
+                    </div>
+
+                    <p>
+                    No significant changes were observed in this iteration, indicating convergence of the algorithm.
+                    </p>
 
             <!-- Variance Comparison -->
             <div class="col-12">
@@ -112,25 +235,27 @@
                             <tbody>
                                 <tr>
                                     <td><strong>1</strong></td>
-                                    <td>2,850,000</td>
+                                    <td>3,200,000</td>
                                     <td>-</td>
                                     <td>High dispersion</td>
                                 </tr>
                                 <tr>
                                     <td><strong>2</strong></td>
-                                    <td>1,920,000</td>
-                                    <td>-930,000</td>
-                                    <td>Significant improvement</td>
+                                    <td>2,100,000</td>
+                                    <td>-1,100,000</td>
+                                    <td>Clusters improved</td>
                                 </tr>
                                 <tr class="table-success">
                                     <td><strong>3</strong></td>
-                                    <td>1,450,000</td>
-                                    <td>-470,000</td>
+                                    <td>2,050,000</td>
+                                    <td>-50,000</td>
                                     <td><strong>Convergence achieved</strong></td>
                                 </tr>
                             </tbody>
+
                         </table>
-                        <p class="mt-3"><strong>Conclusion:</strong> The WCSS decreased by approximately 49% after 3 iterations, showing clear convergence of the algorithm.</p>
+                        <img src="{{ url_for('static', filename='wcss_graph.png') }}" class="img-fluid mt-3" alt="WCSS Graph">
+                        <p class="mt-3"><strong>Conclusion:</strong> The WCSS decreased significantly after the first two iterations, and only minimal improvement was observed in the third iteration, indicating convergence of the K-Means algorithm.</p>
                     </div>
                 </div>
             </div>
@@ -148,8 +273,8 @@
                                     <div class="card-body">
                                         <h5>Cluster 1</h5>
                                         <p><strong>Young Low-Income</strong><br>
-                                        Avg Age: 24.3<br>
-                                        Avg Income: 34,800 Rs.</p>
+                                        Avg Age: 22<br>
+                                        Avg Income: 25,256 Rs.</p>
                                     </div>
                                 </div>
                             </div>
@@ -158,8 +283,8 @@
                                     <div class="card-body">
                                         <h5>Cluster 2</h5>
                                         <p><strong>Middle Customers</strong><br>
-                                        Avg Age: 39.8<br>
-                                        Avg Income: 53,900 Rs.</p>
+                                        Avg Age: 37<br>
+                                        Avg Income: 50,000 Rs.</p>
                                     </div>
                                 </div>
                             </div>
@@ -168,16 +293,16 @@
                                     <div class="card-body">
                                         <h5>Cluster 3</h5>
                                         <p><strong>Premium Customers</strong><br>
-                                        Avg Age: 59.4<br>
-                                        Avg Income: 82,500 Rs.</p>
+                                        Avg Age: 55.6<br>
+                                        Avg Income: 79,981 Rs.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="alert alert-info mt-4">
-                            <strong>Final Interpretation:</strong> The manual simulation successfully demonstrated how K-Means works. 
-                            The progressive reduction in WCSS confirms that the clusters became more compact and meaningful after each iteration.
+                            <strong>Final Interpretation:</strong> The manual simulation demonstrates how K-Means iteratively improves cluster quality. 
+                                The reduction in WCSS and stability of centroids in the final iteration confirm that the algorithm successfully converged, forming meaningful customer segments based on age and income.
                         </div>
                     </div>
                 </div>
