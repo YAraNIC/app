@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
-
+import LogisticRegressionModel
 import MentalHealth
+import AssignedClassificationModel
+import KMeansModel
 
 app = Flask(__name__)
 
@@ -59,5 +61,96 @@ def burnout():
                            form_data=form_data,
                            model_info=model_info)
 
+@app.route('/logistic-concepts')
+def logistic_concepts():
+    return render_template('logistic_concepts.html')
+
+@app.route('/logistic-application', methods=["GET", "POST"])
+def logistic_application():
+    result    = None
+    form_data = {}
+    options    = LogisticRegressionModel.getOptions()
+    model_info = LogisticRegressionModel.getModelInfo()
+
+    if request.method == "POST":
+        try:
+            form_data = {
+                "price":      float(request.form["price"]),
+                "category":   request.form["category"],
+                "payment":    request.form["payment"],
+                "month":      int(request.form["month"]),
+                "is_weekend": int(request.form["is_weekend"]),
+            }
+            result = LogisticRegressionModel.predictSavings(**form_data)
+        except Exception as e:
+            print("Error en formulario:", e)
+
+    return render_template("logistic_application.html",
+                           result=result,
+                           form_data=form_data,
+                           options=options,
+                           model_info=model_info)
+
+@app.route('/assigned-concepts')
+def assigned_concepts():
+    return render_template('assigned_concepts.html')
+
+@app.route('/assigned-application', methods=["GET", "POST"])
+def assigned_application():
+    result = None
+    form_data = {}
+    model_info = AssignedClassificationModel.getModelInfo()
+
+    if request.method == "POST":
+        try:
+            form_data = {
+                "frequency": float(request.form["frequency"]),
+                "avg_order": float(request.form["avg_order"]),
+                "days_since_last": float(request.form["days_since_last"]),
+            }
+            result = AssignedClassificationModel.predictChurn(**form_data)
+        except Exception as e:
+            print("Error en formulario Assigned:", e)
+
+    return render_template("assigned_application.html",
+                           result=result,
+                           form_data=form_data,
+                           model_info=model_info)
+
+
+# ===================== UNSUPERVISED - K-MEANS =====================
+
+@app.route('/unsupervised-concepts')
+def unsupervised_concepts():
+    return render_template('unsupervised_concepts.html')
+
+@app.route('/kmeans-manual')
+def kmeans_manual():
+    return render_template('kmeans_manual.html')
+
+@app.route('/kmeans-application', methods=["GET", "POST"])
+def kmeans_application():
+    result = None
+    form_data = {}
+    model_info = KMeansModel.get_model_info()
+    
+    if request.method == "POST":
+        try:
+            age = float(request.form.get("age"))
+            annual_income = float(request.form.get("annual_income"))
+            cluster = KMeansModel.predict_cluster(age, annual_income)
+            
+            result = {
+                "age": age,
+                "annual_income": annual_income,
+                "cluster": cluster + 1   # Show as 1, 2, 3 instead of 0,1,2
+            }
+        except Exception as e:
+            print("Error predicting cluster:", e)
+    
+    return render_template("kmeans_application.html",
+                           result=result,
+                           form_data=form_data,
+                           model_info=model_info)
 if __name__ == '__main__':
     app.run(debug=True)

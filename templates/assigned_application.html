@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block title %}Assigned Classification Model — Churn Prediction{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-white" style="background: linear-gradient(135deg, #0d6efd, #6f42c1);">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-person-x me-2"></i>Customer Churn Predictor</h1>
+        <p class="lead mb-0">Will the customer stay or churn? (SGDClassifier)</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- FORM -->
+            <div class="col-md-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="fw-bold mb-0"><i class="bi bi-sliders text-primary me-2"></i>Enter Customer Data</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" action="/assigned-application">
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Purchase Frequency (last 6 months)</label>
+                                <input type="number" class="form-control" name="frequency" min="0" placeholder="e.g. 5" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Average Order Value (Rs.)</label>
+                                <input type="number" class="form-control" name="avg_order" min="0" step="0.01" placeholder="e.g. 120" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Days Since Last Purchase</label>
+                                <input type="number" class="form-control" name="days_since_last" min="0" placeholder="e.g. 10" required>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-lg fw-semibold text-white"
+                                    style="background: linear-gradient(135deg,#0d6efd,#6f42c1);">
+                                    <i class="bi bi-send me-2"></i>Predict Churn
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT + MODEL INFO -->
+            <div class="col-md-7">
+
+                {% if result is not none %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4 text-center">
+                        {% if result.prediction == 1 %}
+                            <div class="mb-2" style="font-size:3.5rem;">⚠️</div>
+                            <h2 class="fw-bold text-danger mb-1">Customer will CHURN</h2>
+                            <p class="text-muted">High risk of leaving</p>
+                            <div class="d-inline-block bg-danger text-white rounded px-4 py-2 mb-3">
+                                <span class="fs-4 fw-bold">{{ result.probability }}%</span>
+                                <span class="ms-2">probability</span>
+                            </div>
+                        {% else %}
+                            <div class="mb-2" style="font-size:3.5rem;">✅</div>
+                            <h2 class="fw-bold text-success mb-1">Customer will STAY</h2>
+                            <p class="text-muted">Low risk of churn</p>
+                            <div class="d-inline-block bg-success text-white rounded px-4 py-2 mb-3">
+                                <span class="fs-4 fw-bold">{{ 100 - result.probability }}%</span>
+                                <span class="ms-2">probability</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- MODEL INFO -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-info-circle text-primary me-2"></i>Model Information</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-3" style="font-size:0.85rem;">
+                            SGDClassifier (loss='log_loss') trained on synthetic customer data.
+                        </p>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-4">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <div class="fw-bold fs-5 text-primary">{{ model_info.accuracy }}%</div>
+                                    <small class="text-muted">Accuracy</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <div class="fw-bold fs-5 text-primary">{{ model_info.precision_1 }}</div>
+                                    <small class="text-muted">Precision (Churn)</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <div class="fw-bold fs-5 text-primary">{{ model_info.recall_1 }}</div>
+                                    <small class="text-muted">Recall (Churn)</small>
+                                </div>
+                            </div>
+                        </div>
+                                                <!-- Confusion Matrix -->
+                        <p class="fw-semibold mb-2" style="font-size:0.85rem;">Confusion Matrix:</p>
+                        <div class="text-center mb-3">
+                            <img src="data:image/png;base64,{{ model_info.confusion_matrix_img }}" 
+                                 alt="Confusion Matrix" class="img-fluid border rounded shadow-sm" style="max-width:100%;">
+                        </div>
+                        <a href="/assigned-concepts" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-book me-1"></i>Review Concepts
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

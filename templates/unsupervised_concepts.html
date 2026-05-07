@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block title %}Basic Concepts — Unsupervised Machine Learning{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-white" style="background: linear-gradient(135deg, #6f42c1, #fd7e14);">
+    <div class="container py-3">
+        <h1 class="fw-bold"><i class="bi bi-book me-2"></i>Basic Concepts — Unsupervised Machine Learning</h1>
+        <p class="lead mb-0">Understanding Clustering and K-Means Algorithm</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- What is Unsupervised Learning -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-diagram-3-fill me-2 text-primary"></i>What is Unsupervised Learning?</h4>
+                        <p>Unsupervised learning is a type of machine learning where the model is trained on data <strong>without labeled outputs</strong>. The algorithm tries to find hidden patterns, structures, or groupings in the data by itself.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What is Clustering -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-grid-3x3-gap-fill me-2 text-success"></i>What is Clustering?</h4>
+                        <p>Clustering is an unsupervised learning technique that groups similar data points together based on their features. The goal is to have high similarity within a cluster and low similarity between different clusters.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- K-Means Algorithm -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-cpu-fill me-2 text-warning"></i>K-Means Algorithm</h4>
+                        <p>K-Means is one of the most popular and simplest clustering algorithms. It aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean (centroid).</p>
+                        
+                        <div class="bg-dark text-white p-3 rounded mt-3">
+                            <strong>Main Steps of K-Means:</strong>
+                            <ol class="mt-2">
+                                <li>Choose the number of clusters (K)</li>
+                                <li>Randomly select K initial centroids</li>
+                                <li>Assign each data point to the nearest centroid (using Euclidean distance)</li>
+                                <li>Recalculate the centroids as the mean of all points in the cluster</li>
+                                <li>Repeat steps 3 and 4 until centroids no longer change significantly (convergence)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Concepts -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Centroids</h5>
+                        <p>The center point of a cluster, calculated as the mean of all points assigned to that cluster.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Euclidean Distance</h5>
+                        <p>The straight-line distance between two points in Euclidean space. Used to measure how close a data point is to a centroid.</p>
+                        <p class="font-monospace">Distance = √[(x₂ - x₁)² + (y₂ - y₁)²]</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real World Applications -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold"><i class="bi bi-globe me-2 text-info"></i>Real-World Applications of K-Means</h4>
+                        <div class="row g-3">
+                            <div class="col-md-4"><div class="bg-light p-3 rounded">Customer Segmentation</div></div>
+                            <div class="col-md-4"><div class="bg-light p-3 rounded">Image Compression</div></div>
+                            <div class="col-md-4"><div class="bg-light p-3 rounded">Document Clustering</div></div>
+                            <div class="col-md-4"><div class="bg-light p-3 rounded">Anomaly Detection</div></div>
+                            <div class="col-md-4"><div class="bg-light p-3 rounded">Market Basket Analysis</div></div>
+                            <div class="col-md-4"><div class="bg-light p-3 rounded">Recommendation Systems</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/kmeans-manual" class="btn btn-lg text-white px-5 me-3"
+               style="background: linear-gradient(135deg, #6f42c1, #fd7e14);">
+                Go to K-Means Manual Exercise
+            </a>
+            <a href="/kmeans-application" class="btn btn-lg btn-outline-primary px-5">
+                Go to Clustering Application
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
