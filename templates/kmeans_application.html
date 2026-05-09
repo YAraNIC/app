@@ -14,11 +14,11 @@
     <div class="container">
         <div class="row g-4">
 
-            <!-- Formulario -->
+            <!-- Form -->
             <div class="col-md-5">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white py-3">
-                        <h5 class="fw-bold mb-0"><i class="bi bi-person-plus me-2"></i>Predecir Cluster de Nuevo Cliente</h5>
+                        <h5 class="fw-bold mb-0"><i class="bi bi-person-plus me-2"></i>Predict New Customer Cluster</h5>
                     </div>
                     <div class="card-body p-4">
                         <form method="POST">
@@ -63,48 +63,48 @@
 
                             <button type="submit" class="btn btn-lg w-100 mt-4 text-white fw-semibold"
                                     style="background: linear-gradient(135deg, #6f42c1, #fd7e14);">
-                                Predecir Cluster
+                                Predict Cluster
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <!-- Resultados y Visualización -->
+            <!-- Results & Visualization -->
             <div class="col-md-7">
 
                 {% if result is not none %}
                 <div class="card border-0 shadow-sm mb-4 text-center">
                     <div class="card-body">
-                        <h3>El cliente pertenece al <strong>Cluster {{ result.cluster }}</strong></h3>
-                        <p class="lead">Age: {{ result.age }} | Income: {{ result.annual_income }}</p>
+                        <h3>This customer belongs to <strong>Cluster {{ result.cluster }}</strong></h3>
+                        <p class="lead">Age: {{ result.age }} | Income: {{ result.annual_income }} Rs.</p>
                     </div>
                 </div>
                 {% endif %}
 
-                <!-- Gráfico -->
+                <!-- Scatter Plot -->
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
-                        <h5 class="fw-bold mb-3">Visualización de Clusters</h5>
+                        <h5 class="fw-bold mb-3">Clusters Visualization</h5>
                         <img src="data:image/png;base64,{{ model_info.scatter_plot }}" 
                              class="img-fluid rounded shadow-sm" alt="K-Means Clusters">
                     </div>
                 </div>
 
-                <!-- Resumen -->
+                <!-- Cluster Summary -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
-                        <h5 class="fw-bold mb-3">Resumen de Segmentos</h5>
+                        <h5 class="fw-bold mb-3">Cluster Summary</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Cluster</th>
-                                        <th>Nombre</th>
-                                        <th>Clientes</th>
-                                        <th>Edad Prom.</th>
-                                        <th>Ingreso Prom.</th>
-                                        <th>Credit Score Prom.</th>
+                                        <th>Segment Name</th>
+                                        <th>Customers</th>
+                                        <th>Avg Age</th>
+                                        <th>Avg Income</th>
+                                        <th>Avg Credit Score</th>
                                     </tr>
                                 </thead>
                                 <tbody>
