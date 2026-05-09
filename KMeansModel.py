@@ -7,85 +7,101 @@ from io import BytesIO
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-# ===================== LOAD DATASET =====================
-DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "customer_segmentation_100.csv")
+# ===================== RUTA CORRECTA =====================
+DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "Credit_Card_Dataset.csv")
 
 def _load_and_train():
-    """Load data, train KMeans and generate visualization"""
+    print(f"Cargando dataset desde: {DATA_PATH}")  # Para ver si encuentra el archivo
+    
     df = pd.read_csv(DATA_PATH)
     
-    # Features
-    X = df[['age', 'annual_income']]
+    features = ['Age', 'Annual_Income', 'Credit_Score', 'Credit_Utilization_Ratio',
+                'Debt_To_Income_Ratio', 'Number_of_Late_Payments', 'Total_Spend_Last_Year']
     
-    # Scale features
+    X = df[features].copy()
+    X = X.fillna(X.median())
+    
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
-    # Train K-Means
-    kmeans = KMeans(n_clusters=3, init='k-means++', n_init=10, random_state=42)
+    kmeans = KMeans(n_clusters=5, init='k-means++', n_init=10, random_state=42)
     kmeans.fit(X_scaled)
     
-    # Assign clusters to dataframe
     df['cluster'] = kmeans.labels_
     
-    # Get centroids in original scale
     centroids = scaler.inverse_transform(kmeans.cluster_centers_)
+    centroids_df = pd.DataFrame(centroids, columns=features).round(2)
     
-    # Generate Scatter Plot
-    fig, ax = plt.subplots(figsize=(10, 6))
-    colors = ['#e74c3c', '#3498db', '#2ecc71']
+    # Gráfico
+    fig, ax = plt.subplots(figsize=(11, 7))
+    colors = ['#2ecc71', '#3498db', '#f1c40f', '#e74c3c', '#9b59b6']
     
-    for i in range(3):
+    for i in range(5):
         cluster_data = df[df['cluster'] == i]
-        ax.scatter(cluster_data['age'], cluster_data['annual_income'], 
-                  c=colors[i], label=f'Cluster {i+1}', s=60, alpha=0.85)
-    
-    # Plot centroids
-    ax.scatter(centroids[:, 0], centroids[:, 1], 
-              c='yellow', marker='*', s=350, edgecolors='black', 
-              linewidth=2.5, label='Centroids')
+        ax.scatter(cluster_data['Age'], cluster_data['Annual_Income'], 
+                  c=colors[i], label=f'Cluster {i}', s=50, alpha=0.85)
     
     ax.set_xlabel('Age')
-    ax.set_ylabel('Annual Income (Rs.)')
-    ax.set_title('K-Means Clustering - Customer Segmentation')
+    ax.set_ylabel('Annual Income')
+    ax.set_title('Credit Card Customer Segmentation - K-Means')
     ax.legend()
     ax.grid(True, alpha=0.3)
     
-    # Convert plot to base64
     buf = BytesIO()
     fig.savefig(buf, format='png', bbox_inches='tight', dpi=180)
     buf.seek(0)
     plot_base64 = base64.b64encode(buf.read()).decode('utf-8')
     plt.close(fig)
     
-    return df, centroids.round(1).tolist(), round(kmeans.inertia_, 2), plot_base64, scaler, kmeans
+    return df, centroids_df, plot_base64, scaler, kmeans, features
 
-# Train the model when the file is imported
-df_clusters, centroids, wcss, scatter_plot_img, scaler, kmeans_model = _load_and_train()
 
-# ===================== PUBLIC FUNCTIONS =====================
+# Entrenamiento
+df_clusters, centroids_df, scatter_plot_img, scaler, model, feature_names = _load_and_train()
+
+cluster_names = {
+    0: "Clientes Premium",
+    1: "Clientes Jóvenes Activos",
+    2: "Clientes Estables",
+    3: "Clientes de Alto Riesgo",
+    4: "Clientes de Bajo Uso"
+}
 
 def get_model_info():
-    """Return all information needed for the template"""
     summary = df_clusters.groupby('cluster').agg({
-        'age': ['count', 'mean'],
-        'annual_income': 'mean'
-    }).round(1)
+        'Age': 'mean',
+        'Annual_Income': 'mean',
+        'Credit_Score': 'mean',
+        'Credit_Utilization_Ratio': 'mean',
+        'Debt_To_Income_Ratio': 'mean',
+        'Number_of_Late_Payments': 'mean',
+        'Total_Spend_Last_Year': 'mean',
+        'cluster': 'count'
+    }).round(2)
     
-    summary.columns = ['Count', 'Avg Age', 'Avg Income']
+    summary.rename(columns={'cluster': 'Count'}, inplace=True)
     summary = summary.reset_index()
+    summary['Cluster_Name'] = summary['cluster'].map(cluster_names)
     
     return {
-        "n_clusters": 3,
-        "wcss": wcss,
-        "centroids": centroids,
+        "n_clusters": 5,
+        "centroids": centroids_df.to_dict('records'),
         "cluster_summary": summary.to_dict('records'),
-        "scatter_plot": scatter_plot_img
+        "scatter_plot": scatter_plot_img,
+        "features": feature_names,
+        "cluster_names": cluster_names
     }
 
-def predict_cluster(age, annual_income):
-    """Predict which cluster a new customer belongs to"""
-    X_new = np.array([[float(age), float(annual_income)]])
-    X_scaled = scaler.transform(X_new)
-    cluster_id = int(kmeans_model.predict(X_scaled)[0])
+def predict_cluster(age, annual_income, credit_score, utilization, dti, late_payments, spend):
+    input_data = pd.DataFrame([{
+        'Age': age,
+        'Annual_Income': annual_income,
+        'Credit_Score': credit_score,
+        'Credit_Utilization_Ratio': utilization,
+        'Debt_To_Income_Ratio': dti,
+        'Number_of_Late_Payments': late_payments,
+        'Total_Spend_Last_Year': spend
+    }])
+    scaled = scaler.transform(input_data)
+    cluster_id = int(model.predict(scaled)[0])
     return cluster_id

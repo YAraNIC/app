@@ -118,7 +118,7 @@ def assigned_application():
                            model_info=model_info)
 
 
-# ===================== UNSUPERVISED - K-MEANS =====================
+# ===================== UNSUPERVISED MACHINE LEARNING =====================
 
 @app.route('/unsupervised-concepts')
 def unsupervised_concepts():
@@ -138,12 +138,18 @@ def kmeans_application():
         try:
             age = float(request.form.get("age"))
             annual_income = float(request.form.get("annual_income"))
-            cluster = KMeansModel.predict_cluster(age, annual_income)
+            credit_score = float(request.form.get("credit_score"))
+            utilization = float(request.form.get("utilization"))
+            dti = float(request.form.get("dti"))
+            late_payments = float(request.form.get("late_payments"))
+            spend = float(request.form.get("spend"))
+            
+            cluster = KMeansModel.predict_cluster(age, annual_income, credit_score, utilization, dti, late_payments, spend)
             
             result = {
                 "age": age,
                 "annual_income": annual_income,
-                "cluster": cluster + 1   # Show as 1, 2, 3 instead of 0,1,2
+                "cluster": cluster + 1
             }
         except Exception as e:
             print("Error predicting cluster:", e)
