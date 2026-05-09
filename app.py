@@ -118,6 +118,16 @@ def assigned_application():
                            model_info=model_info)
 
 
+# ===================== UNSUPERVISED MACHINE LEARNING =====================
+
+@app.route('/unsupervised-concepts')
+def unsupervised_concepts():
+    return render_template('unsupervised_concepts.html')
+
+@app.route('/kmeans-manual')
+def kmeans_manual():
+    return render_template('kmeans_manual.html')
+
 @app.route('/kmeans-application', methods=["GET", "POST"])
 def kmeans_application():
     result = None
@@ -126,29 +136,19 @@ def kmeans_application():
     
     if request.method == "POST":
         try:
-            form_data = {
-                "age": float(request.form.get("age")),
-                "annual_income": float(request.form.get("annual_income")),
-                "credit_score": float(request.form.get("credit_score")),
-                "utilization": float(request.form.get("utilization")),
-                "dti": float(request.form.get("dti")),
-                "late_payments": float(request.form.get("late_payments")),
-                "spend": float(request.form.get("spend")),
-            }
+            age = float(request.form.get("age"))
+            annual_income = float(request.form.get("annual_income"))
+            credit_score = float(request.form.get("credit_score"))
+            utilization = float(request.form.get("utilization"))
+            dti = float(request.form.get("dti"))
+            late_payments = float(request.form.get("late_payments"))
+            spend = float(request.form.get("spend"))
             
-            cluster = KMeansModel.predict_cluster(
-                form_data["age"],
-                form_data["annual_income"],
-                form_data["credit_score"],
-                form_data["utilization"],
-                form_data["dti"],
-                form_data["late_payments"],
-                form_data["spend"]
-            )
+            cluster = KMeansModel.predict_cluster(age, annual_income, credit_score, utilization, dti, late_payments, spend)
             
             result = {
-                "age": form_data["age"],
-                "annual_income": form_data["annual_income"],
+                "age": age,
+                "annual_income": annual_income,
                 "cluster": cluster + 1
             }
         except Exception as e:
